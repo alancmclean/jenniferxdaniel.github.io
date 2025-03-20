@@ -1,0 +1,686 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Jennifer Daniel</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=DynaPuff:wdth,wght@75..100,400..700&family=Noto+Emoji:wght@300..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+
+
+<style>
+
+  @font-face {
+    font-family: 'Noto Emoji';
+    src: url('https://raw.githubusercontent.com/googlefonts/noto-emoji/main/fonts/NotoEmoji-Regular.ttf') format('truetype');
+  }
+
+  html{
+    height: 100%;
+    margin:0;
+    padding:0;
+  }
+  body {  
+    font-family: "Dynapuff", sans-serif;
+/*    background-color: #000;*/
+    background-color: #000B24;
+    color: #f9fafb;
+    height: 100%;
+    margin:0;
+    padding:0;
+  }
+  h3 {
+    font-size:4rem;
+    margin:0;
+    padding:0;
+    text-align:center;
+    display:block;
+  }
+  .container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+  }
+
+
+  @keyframes gentlePopPositive {
+    0% {
+      transform: scale(0.45) rotate(0deg); 
+    }
+    100% {
+      transform: scale(0.38) rotate(5deg);
+      
+    }
+  }
+  @keyframes gentlePopNegative {
+    0% {
+      transform: scale(0.45) rotate(0deg); 
+    }
+    100% {
+      transform: scale(0.38) rotate(-5deg);
+      
+    }
+  }
+
+  
+  
+
+
+  @keyframes splatAnimation {
+    to {
+      transform: translateY(-50%) scaleX(2);
+    }
+  }
+
+
+  @keyframes slideUp {
+    0% {
+      transform: translate(0, 0) scale(.5); 
+    },  
+    20% {
+       transform: translate(0, -12vh) scale(.8); 
+    }
+    100% {
+      transform: translate(0, -130vh) scale(.8); 
+    }
+  }
+
+  @keyframes grow {
+    0% {
+      transform: scale(0); 
+    }
+    100% {
+      transform: scale(1); 
+    }
+  }
+
+  .sticker{
+    position:fixed;
+    animation: gentlePopPositive 0.9s ease-out forwards; 
+/*    animation-delay: 1s;*/
+    pointer-events:none;
+    z-index:100;
+/*      transform: translateY(-50%) scaleX(0.2);*/
+/*    animation: splatAnimation 0.8s ease-out forwards; /* Apply animation */*/
+
+/*    box-shadow: 0 0 12px rgba(0,0,0,.2);*/
+  }
+
+  .sticker.negative{
+    animation: gentlePopNegative 0.8s ease-out forwards; 
+  }
+
+  .googleEmoji{
+    position:fixed;
+    animation: slideUp 8s ease-out; 
+    pointer-events:none;
+    z-index:100;
+  }
+
+  .active{
+    z-index:10000;
+    color:red;
+    cursor: pointer;
+  }
+  #emojiCanvas{
+    width:100%;
+    height:100%;
+    position:fixed;
+    pointer-events: none;
+    z-index:-1;
+    left:0;
+    bottom:0;
+    right:0;
+    top:0;
+/*    display:none;*/
+  }
+
+  .link {
+  transition: transform 0.3s ease;
+  cursor: pointer;
+/*  font-size: 16px;*/
+/*  padding: 8px 16px;*/
+/*  border: 1px solid #ccc;*/
+/*  border-radius: 4px;*/
+}
+
+.link:hover {
+  transform: scale(1.15); /* Scale up on hover */
+  z-index: 1000; /* Ensure hovered link is on top */
+}
+
+/* Logic for scaling based on distance */
+.link-container:hover .link {
+  transform: scale(0.8); /* Default scale down */
+}
+
+.link-container .link:hover,.link-container .link.active {
+  transform: scale(1.15); /* Scale up hovered link */
+}
+
+/* Dynamic scaling based on link position */
+.link-container:has(.link:nth-child(1):hover) .link:nth-child(2),
+.link-container:has(.link:nth-child(2):hover) .link:nth-child(1),
+.link-container:has(.link:nth-child(2):hover) .link:nth-child(3),
+.link-container:has(.link:nth-child(3):hover) .link:nth-child(2),
+.link-container:has(.link:nth-child(3):hover) .link:nth-child(4),
+.link-container:has(.link:nth-child(4):hover) .link:nth-child(3),
+.link-container:has(.link:nth-child(4):hover) .link:nth-child(5),
+.link-container:has(.link:nth-child(5):hover) .link:nth-child(4),
+.link-container:has(.link:nth-child(5):hover) .link:nth-child(6),
+.link-container:has(.link:nth-child(6):hover) .link:nth-child(5)
+{
+  transform: scale(1); /* Scale closer link less */
+}
+
+.link-container:has(.link:nth-child(1):hover) .link:nth-child(3),
+.link-container:has(.link:nth-child(1):hover) .link:nth-child(4),
+.link-container:has(.link:nth-child(1):hover) .link:nth-child(5),
+.link-container:has(.link:nth-child(1):hover) .link:nth-child(6),
+.link-container:has(.link:nth-child(6):hover) .link:nth-child(1),
+.link-container:has(.link:nth-child(6):hover) .link:nth-child(2),
+.link-container:has(.link:nth-child(6):hover) .link:nth-child(3),
+.link-container:has(.link:nth-child(6):hover) .link:nth-child(4),
+.link-container:has(.link:nth-child(2):hover) .link:nth-child(4),
+.link-container:has(.link:nth-child(2):hover) .link:nth-child(5),
+.link-container:has(.link:nth-child(2):hover) .link:nth-child(6),
+.link-container:has(.link:nth-child(5):hover) .link:nth-child(1),
+.link-container:has(.link:nth-child(5):hover) .link:nth-child(2),
+.link-container:has(.link:nth-child(5):hover) .link:nth-child(3),
+.link-container:has(.link:nth-child(3):hover) .link:nth-child(1),
+.link-container:has(.link:nth-child(3):hover) .link:nth-child(5),
+.link-container:has(.link:nth-child(3):hover) .link:nth-child(6),
+.link-container:has(.link:nth-child(4):hover) .link:nth-child(1),
+.link-container:has(.link:nth-child(4):hover) .link:nth-child(2),
+.link-container:has(.link:nth-child(4):hover) .link:nth-child(6)
+{
+    transform: scale(0.9);
+}
+
+.link-container:has(.link:nth-child(1):hover) .link:nth-child(6),
+.link-container:has(.link:nth-child(6):hover) .link:nth-child(1),
+.link-container:has(.link:nth-child(2):hover) .link:nth-child(5),
+.link-container:has(.link:nth-child(5):hover) .link:nth-child(2),
+.link-container:has(.link:nth-child(3):hover) .link:nth-child(4),
+.link-container:has(.link:nth-child(4):hover) .link:nth-child(3)
+{
+  transform: scale(0.85);
+}
+
+/*#noto.active{
+  color:#6674C0 !important;
+}
+*/
+.emojiToggle{
+  font-family: "Noto Emoji";
+  font-size: 50px;
+  font-weight: 200;
+  cursor:pointer;
+  border-radius: 12px;
+  display:inline-block;
+  padding:12px;
+}
+
+.emojiToggle.activeEmoji, .emojiToggle:hover{
+  background:#fff;
+  color:#000;
+}
+
+/*#emojiKitchen.active{
+  color:#FF00FF;  
+}
+
+#googleEmoji.active{
+  color:#F94AAB;
+}*/
+
+
+.active{
+  color:#F94AAB;
+}
+
+.controls{
+  background:rgba(0,0,0,.9);
+  max-width:40%;
+  padding:24px 48px;
+  border-radius: 50px;
+  position: fixed;
+  bottom:-500px;
+  display:flex;
+  flex-direction: column; 
+  z-index:100000;
+}
+
+.toggles{
+/*  display:none;*/
+}
+
+.link-container{
+  margin-top:-60px;
+}
+#emojiCanvas{
+  font-variant-emoji: text;
+}
+
+</style>
+</head>
+<body class="bg-gray-900 text-white">
+<!-- <header class="container">
+  <h1>Jennifer Daniel</h1>
+  <nav>
+      <a href="#work">Work</a>
+      <a href="#press">Press</a>
+      <a href="#awards">Awards</a>
+      <a href="#contact">Contact</a>
+  </nav>
+</header> -->
+
+<main class="container link-container">
+  <canvas id="emojiCanvas"></canvas>
+  <h3 id="unicode" class="link">Unicode</h3>
+  <h3 class="link" id="emojiKitchen">Emoji Kitchen</h3>
+  <h3 class="link" id="googleEmoji">Google Emoji</h3>
+  <h3 class="link" id="noto">Noto Emoji</h3>
+  <h3 id="nyt" class="link">New York Times</h3>
+  <h3 id="editorial" class="link">Editorial</h3>
+
+  <div class="controls">
+    <h4>Noto Emoji</h4>
+    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
+    tempor incididunt ut labore et dolore magna aliqua.</p>
+
+    <div class="toggles">
+      <div class="emojiToggle" data-emoji="🐢">🐢</div>
+      <div class="emojiToggle" data-emoji="💖">💖</div>
+      <div class="emojiToggle" data-emoji="🎉">🎉</div>
+      <div class="emojiToggle" data-emoji="🍕">🍕</div>
+      <div class="emojiToggle" data-emoji="😍">😍</div>
+    </div>
+  </div>
+</main>
+
+<script type="text/javascript">
+const DEFAULT_SHOW_INTERVAL = 50;
+let showInterval = DEFAULT_SHOW_INTERVAL;
+let intervalId = null;
+let activeState = null
+let startTimestamp;
+// ids and timestamps for all the stickers
+const stickers = [];
+const clearEverything = (target, newState) => {
+  if(activeState === null || activeState != newState){
+    cleanupGoogle()
+    cleanup()
+    cleanupNoto()
+    resetLinks(target)
+  }
+  activeState = newState;
+}
+
+const showEmojiKitchenSticker = () => {
+  const w = window.innerWidth; // Use innerWidth for viewport size
+  const h = window.innerHeight;
+  const size = Math.random() * 400; // Adjust sticker size
+  const x = Math.random() * (w - size);
+  const y = Math.random() * (h - size);
+  const randomImage = Math.floor(Math.random() * 61);
+
+  let img = document.createElement('img');
+  img.src = `images/stickers/image_${randomImage}.png`; // Use the image source from the array
+  img.className = (Math.random() > .5) ? 'sticker' : 'sticker negative';
+
+  img.style.left = `${x}px`; // Use pixels for positioning with viewport size
+  img.style.top = `${y}px`;
+  img.style.width = `${size}px`;
+  img.style.height = `${size}px`;
+
+  // set id might not be unique but its fine...
+  const imgId = Date.now();
+  img.id = imgId;
+
+  document.body.appendChild(img);
+  stickers.push(imgId)
+};
+
+const startShowing = (e) => {
+  
+  
+  
+  clearInterval(intervalId); // Clear any existing interval
+  showInterval = DEFAULT_SHOW_INTERVAL; // Reset interval on new hover
+  intervalId = setInterval(() => {
+    //remove really old images
+    // stickers.forEach(sticker){
+    //   if(Date.now() - parseInt(sticker, 10) >= 30000){
+    //     const elToRemove = document.getElementById(sticker);
+    //     console.log(`removing ${elToRemove}`)
+    //     elToRemove.remove();
+    //   }
+    // }
+
+    showEmojiKitchenSticker();
+    showEmojiKitchenSticker();
+
+    // showEmojiKitchenSticker();
+    if (showInterval > 50) {
+      showInterval -= 10;
+    } else if (showInterval < 2) {
+        showInterval = 2; // Prevent interval from going too low
+    }
+    clearInterval(intervalId); // Clear and reset with new interval
+    intervalId = setInterval(startShowing, showInterval); // Call startShowing again with updated interval
+  }, showInterval);
+};
+
+const cleanup = () => {
+  clearInterval(intervalId); // Stop the interval when mouse leaves
+  intervalId = null
+  const stickerElements = document.getElementsByClassName('sticker');
+  // Remove in reverse order to avoid index issues
+  for (let i = stickerElements.length - 1; i >= 0; i--) {
+    stickerElements[i].remove();
+  }
+};
+
+const triggerEmoji = document.getElementById('emojiKitchen');
+triggerEmoji.addEventListener('click', (e) => {
+  clearEverything(e.target, 'emojiKitchen')
+  startShowing()
+});
+// triggerEmoji.addEventListener('mouseout', cleanup);
+
+
+/////////////////////////////////////////////
+// emoji
+
+const resetLinks = (target, newActiveState) => {
+  console.log(target)
+  let activeLink = document.getElementsByClassName('active')[0]
+  if(activeLink){
+    activeLink.classList.remove('active')
+  }
+  target.classList.add('active')
+  activeState = newActiveState
+}
+
+const startShowingGoogle = () => {
+  
+
+  clearInterval(intervalId); // Clear any existing interval
+  showInterval = (intervalId === null) ? 0 : 1000; // Reset interval on new hover
+  intervalId = setInterval(() => {
+
+    showGoogleEmoji();
+    showGoogleEmoji();
+    showGoogleEmoji();
+    showGoogleEmoji();
+    // showEmojiKitchenSticker();
+    if (showInterval > 50) {
+      showInterval -= 10;
+    } else if (showInterval < 2) {
+        showInterval = 2; // Prevent interval from going too low
+    }
+    clearInterval(intervalId); // Clear and reset with new interval
+    intervalId = setInterval(startShowingGoogle, showInterval); // Call startShowing again with updated interval
+  }, showInterval);
+};
+
+
+const showGoogleEmoji = () => {
+  const w = window.innerWidth; // Use innerWidth for viewport size
+  const h = window.innerHeight;
+  const size = Math.random() * 400; // Adjust sticker size
+  const x = Math.random() * (w - size);
+  const y = h;
+  const randomImage = Math.floor(Math.random() * 81);
+
+  let img = document.createElement('img');
+  img.src = `images/animated/${randomImage}.webp`; // Use the image source from the array
+  // console.log('hi 2', img.src)
+  img.className = 'googleEmoji';
+  img.style.left = `${x}px`; // Use pixels for positioning with viewport size
+  img.style.top = `${y}px`;
+  img.style.width = `${size}px`;
+  img.style.height = `${size}px`;
+  img.id = `img-${Math.round(Math.random() * 10000)}`
+  
+  setTimeout(()=> {
+    const el = document.getElementById(img.id)
+    if(el){
+      el.remove()
+    }
+  }, 10000)
+
+  // set id might not be unique but its fine...
+  const imgId = Date.now();
+  img.id = imgId;
+
+  document.body.appendChild(img);
+  stickers.push(imgId)
+};
+
+const cleanupGoogle = () => {
+  clearInterval(intervalId); // Stop the interval when mouse leaves
+  intervalId = null
+  const emojiElements = document.getElementsByClassName('googleEmoji');
+  // Remove in reverse order to avoid index issues
+  for (let i = emojiElements.length - 1; i >= 0; i--) {
+    emojiElements[i].remove();
+  }
+};
+
+const triggerGoogleEmoji = document.getElementById('googleEmoji');
+triggerGoogleEmoji.addEventListener('click', (e) => {
+  clearEverything(e.target, 'google')
+  startShowingGoogle()
+});
+// triggerGoogleEmoji.addEventListener('mouseout', cleanupGoogle);
+
+//////////////////////////////////////////////////////
+// noto
+//////////////////////////////////////////////////////
+const random = () => {
+  if (random.seed) {
+    var x = Math.sin(random.seed++) * 10000;
+    return x - Math.floor(x);
+  }
+  return Math.random();
+}
+
+
+// function drawPoissonDisk(canvasId, emoji, radius) {
+//  const canvas = document.getElementById("canvas");
+// const ctx = canvas.getContext("2d");
+
+// // Ensure crisp rendering by accounting for devicePixelRatio
+// const dpr = window.devicePixelRatio || 1;
+// canvas.width = window.innerWidth * dpr;
+// canvas.height = window.innerHeight * dpr;
+// ctx.scale(dpr, dpr); // Scale drawing to match high-resolution canvas
+
+// // List of emojis to use
+// const emojis = ["😀", "🎉", "🔥", "🚀", "🌈", "🐱", "🌟", "🍕", "🦄", "🎸"];
+
+// Poisson Disk Sampling (Bridson's Algorithm)
+function poissonDiskSampling(width, height, radius, k = 30) {
+    const gridSize = radius / Math.sqrt(2);
+    const cols = Math.ceil(width / gridSize);
+    const rows = Math.ceil(height / gridSize);
+    const grid = Array(cols * rows).fill(null);
+    const active = [];
+    const points = [];
+
+    function toGrid(x, y) {
+        return [Math.floor(x / gridSize), Math.floor(y / gridSize)];
+    }
+
+    function inBounds(x, y) {
+        return x >= 0 && y >= 0 && x < width && y < height;
+    }
+
+    function isFarEnough(x, y) {
+        const [gx, gy] = toGrid(x, y);
+        for (let i = -2; i <= 2; i++) {
+            for (let j = -2; j <= 2; j++) {
+                const nx = gx + i, ny = gy + j;
+                if (nx >= 0 && ny >= 0 && nx < cols && ny < rows) {
+                    const idx = nx + ny * cols;
+                    const p = grid[idx];
+                    if (p) {
+                        const dx = p.x - x, dy = p.y - y;
+                        if (dx * dx + dy * dy < radius * radius) return false;
+                    }
+                }
+            }
+        }
+        return true;
+    }
+
+    function addPoint(x, y) {
+        const [gx, gy] = toGrid(x, y);
+        const idx = gx + gy * cols;
+        grid[idx] = { x, y };
+        points.push({ x, y });
+        active.push({ x, y });
+    }
+
+    addPoint(Math.random() * width, Math.random() * height);
+
+    while (active.length > 0) {
+        const randIndex = Math.floor(Math.random() * active.length);
+        const point = active[randIndex];
+        let placed = false;
+
+        for (let i = 0; i < k; i++) {
+            const angle = Math.random() * Math.PI * 2;
+            const r = radius * (1 + Math.random() * 0.5);
+            const newX = point.x + Math.cos(angle) * r;
+            const newY = point.y + Math.sin(angle) * r;
+
+            if (inBounds(newX, newY) && isFarEnough(newX, newY)) {
+                addPoint(newX, newY);
+                placed = true;
+                break;
+            }
+        }
+
+        if (!placed) active.splice(randIndex, 1);
+    }
+
+    return points;
+}
+
+// }
+
+// function drawEmojiSpiral(canvasId, emoji, spacingFactor, angleIncrement) {
+//   const canvas = document.getElementById(canvasId);
+//   const ctx = canvas.getContext('2d');
+//   const canvasWidth = canvas.width;
+//   const canvasHeight = canvas.height;
+
+// const centerX = canvas.width / 2;
+//   const centerY = canvas.height / 2;
+//   const maxRadius = Math.sqrt(centerX * centerX + centerY * centerY); // Diagonal radius
+
+//   // Ensure high DPI for better anti-aliasing
+//   const dpr = window.devicePixelRatio || 1;
+//   canvas.width *= dpr;
+//   canvas.height *= dpr;
+//   ctx.scale(dpr, dpr);
+
+//   ctx.clearRect(0, 0, canvas.width / dpr, canvas.height / dpr);
+
+//   const goldenAngle = angleIncrement * (Math.PI / 180);
+//   let angle = 0;
+//   let radius = 0;
+
+//   const emojiSize = 10;
+//   const spacing = emojiSize * spacingFactor;
+
+//   while (radius <= maxRadius) {
+//     const x = centerX + radius * Math.cos(angle);
+//     const y = centerY + radius * Math.sin(angle);
+
+//     ctx.font = `${emojiSize}px sans-serif`;
+//     ctx.textAlign = 'center';
+//     ctx.textBaseline = 'middle';
+//     ctx.fillText(emoji, x, y);
+
+//     angle += goldenAngle;
+//     radius += spacing;
+//   }
+// }
+
+
+const showNoto = (e) => {
+  console.log('noto')
+  const canvas = document.getElementById("emojiCanvas");
+const ctx = canvas.getContext("2d");
+
+// Ensure crisp rendering by accounting for devicePixelRatio
+const dpr = window.devicePixelRatio || 1;
+canvas.width = window.innerWidth * dpr;
+canvas.height = window.innerHeight * dpr;
+ctx.scale(dpr, dpr); // Scale drawing to match high-resolution canvas
+
+// ctx.fillStyle = "#B3B7DC"
+
+ctx.fillStyle = "#000B24"
+ctx.fillRect(0, 0, canvas.width, canvas.height)
+
+// List of emojis to use
+const emojis = ["🐢", "💕", "🍕"];
+// "🐢", 
+  
+  const emojiSize = Math.min(canvas.width, canvas.height) * 0.02; 
+  const radius = emojiSize * 2.2; // Ensure slight spacing
+
+  // Get Poisson Disk points
+  const points = poissonDiskSampling(canvas.width / dpr, canvas.height / dpr, radius);
+
+  // Draw emojis
+  // ctx.font = `${emojiSize}px sans-serif`;
+  ctx.font = `300 ${emojiSize}px "Noto Emoji"`;
+  ctx.textBaseline = "middle";
+  ctx.textAlign = "center";
+  ctx.fillStyle = "#A4A7D4";
+  
+  // ctx.fontWeight = "200";
+
+  points.forEach(({ x, y }) => {
+      const emoji = emojis[Math.floor(Math.random() * emojis.length)];
+      ctx.fillText(emoji, x, y);
+  })
+
+  // drawPoissonDisk('emojiCanvas','🌻', 30)
+
+}
+const cleanupNoto = () => {
+  let canvas = document.getElementById('emojiCanvas')
+  let ctx = canvas.getContext('2d')
+  ctx.clearRect(0, 0, canvas.width, canvas.height)
+};
+
+const triggerNoto = document.getElementById('noto');
+triggerNoto.addEventListener('click', (e) => { 
+
+  clearEverything(e.target, 'noto')
+  showNoto()
+});
+
+
+
+
+
+
+</script>
+
+
+
+</body>
+</html>
