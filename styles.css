@@ -1,0 +1,281 @@
+
+  /*@font-face {
+    font-family: 'Noto Emoji';
+    src: url('https://raw.githubusercontent.com/googlefonts/noto-emoji/main/fonts/NotoEmoji-Regular.ttf') format('truetype');
+  }*/
+
+  html{
+    height: 100%;
+    margin:0;
+    padding:0;
+  }
+  body {  
+    font-family: "Dynapuff", sans-serif;
+/*    background-color: #000;*/
+    background-color: #000B24;
+    color: #f9fafb;
+    height: 100%;
+    margin:0;
+    padding:0;
+  }
+  h3 {
+    font-size:4rem;
+    margin:0;
+    padding:0;
+    text-align:center;
+    display:block;
+  }
+  .container{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    height: 100vh;
+    width: 100vw;
+  }
+
+
+  @keyframes gentlePopPositive {
+    0% {
+      transform: scale(0.45) rotate(0deg); 
+    }
+    100% {
+      transform: scale(0.38) rotate(5deg);
+      
+    }
+  }
+  @keyframes gentlePopNegative {
+    0% {
+      transform: scale(0.45) rotate(0deg); 
+    }
+    100% {
+      transform: scale(0.38) rotate(-5deg);
+      
+    }
+  }
+
+  
+  
+
+
+  @keyframes splatAnimation {
+    to {
+      transform: translateY(-50%) scaleX(2);
+    }
+  }
+
+
+  @keyframes slideUp {
+    0% {
+      transform: translate(0, 0) scale(.5); 
+    },  
+    20% {
+       transform: translate(0, -12vh) scale(.8); 
+    }
+    100% {
+      transform: translate(0, -130vh) scale(.8); 
+    }
+  }
+
+  @keyframes grow {
+    0% {
+      transform: scale(0); 
+    }
+    100% {
+      transform: scale(1); 
+    }
+  }
+
+  .sticker{
+    position:fixed;
+    animation: gentlePopPositive 0.9s ease-out forwards; 
+/*    animation-delay: 1s;*/
+    pointer-events:none;
+    z-index:100;
+/*      transform: translateY(-50%) scaleX(0.2);*/
+/*    animation: splatAnimation 0.8s ease-out forwards; /* Apply animation */*/
+
+/*    box-shadow: 0 0 12px rgba(0,0,0,.2);*/
+  }
+
+  .sticker.negative{
+    animation: gentlePopNegative 0.8s ease-out forwards; 
+  }
+
+  .googleEmoji{
+    position:fixed;
+    animation: slideUp 8s ease-out; 
+    pointer-events:none;
+    z-index:100;
+  }
+
+  .active{
+    z-index:10000;
+    color:red;
+    cursor: pointer;
+  }
+  #emojiCanvas{
+    width:100%;
+    height:100%;
+    position:fixed;
+    pointer-events: none;
+    z-index:-1;
+    left:0;
+    bottom:0;
+    right:0;
+    top:0;
+/*    display:none;*/
+  }
+
+  .link {
+  transition: transform 0.3s ease;
+  cursor: pointer;
+/*  font-size: 16px;*/
+/*  padding: 8px 16px;*/
+/*  border: 1px solid #ccc;*/
+/*  border-radius: 4px;*/
+}
+
+.link:hover {
+  transform: scale(1.15); /* Scale up on hover */
+  z-index: 1000; /* Ensure hovered link is on top */
+}
+
+/* Logic for scaling based on distance */
+.link-container:hover .link {
+  transform: scale(0.8); /* Default scale down */
+}
+
+.link-container .link:hover,.link-container .link.active {
+  transform: scale(1.15); /* Scale up hovered link */
+}
+
+/* Dynamic scaling based on link position */
+.link-container:has(.link:nth-child(1):hover) .link:nth-child(2),
+.link-container:has(.link:nth-child(2):hover) .link:nth-child(1),
+.link-container:has(.link:nth-child(2):hover) .link:nth-child(3),
+.link-container:has(.link:nth-child(3):hover) .link:nth-child(2),
+.link-container:has(.link:nth-child(3):hover) .link:nth-child(4),
+.link-container:has(.link:nth-child(4):hover) .link:nth-child(3),
+.link-container:has(.link:nth-child(4):hover) .link:nth-child(5),
+.link-container:has(.link:nth-child(5):hover) .link:nth-child(4),
+.link-container:has(.link:nth-child(5):hover) .link:nth-child(6),
+.link-container:has(.link:nth-child(6):hover) .link:nth-child(5)
+{
+  transform: scale(1); /* Scale closer link less */
+}
+
+.link-container:has(.link:nth-child(1):hover) .link:nth-child(3),
+.link-container:has(.link:nth-child(1):hover) .link:nth-child(4),
+.link-container:has(.link:nth-child(1):hover) .link:nth-child(5),
+.link-container:has(.link:nth-child(1):hover) .link:nth-child(6),
+.link-container:has(.link:nth-child(6):hover) .link:nth-child(1),
+.link-container:has(.link:nth-child(6):hover) .link:nth-child(2),
+.link-container:has(.link:nth-child(6):hover) .link:nth-child(3),
+.link-container:has(.link:nth-child(6):hover) .link:nth-child(4),
+.link-container:has(.link:nth-child(2):hover) .link:nth-child(4),
+.link-container:has(.link:nth-child(2):hover) .link:nth-child(5),
+.link-container:has(.link:nth-child(2):hover) .link:nth-child(6),
+.link-container:has(.link:nth-child(5):hover) .link:nth-child(1),
+.link-container:has(.link:nth-child(5):hover) .link:nth-child(2),
+.link-container:has(.link:nth-child(5):hover) .link:nth-child(3),
+.link-container:has(.link:nth-child(3):hover) .link:nth-child(1),
+.link-container:has(.link:nth-child(3):hover) .link:nth-child(5),
+.link-container:has(.link:nth-child(3):hover) .link:nth-child(6),
+.link-container:has(.link:nth-child(4):hover) .link:nth-child(1),
+.link-container:has(.link:nth-child(4):hover) .link:nth-child(2),
+.link-container:has(.link:nth-child(4):hover) .link:nth-child(6)
+{
+    transform: scale(0.9);
+}
+
+.link-container:has(.link:nth-child(1):hover) .link:nth-child(6),
+.link-container:has(.link:nth-child(6):hover) .link:nth-child(1),
+.link-container:has(.link:nth-child(2):hover) .link:nth-child(5),
+.link-container:has(.link:nth-child(5):hover) .link:nth-child(2),
+.link-container:has(.link:nth-child(3):hover) .link:nth-child(4),
+.link-container:has(.link:nth-child(4):hover) .link:nth-child(3)
+{
+  transform: scale(0.85);
+}
+
+/*#noto.active{
+  color:#6674C0 !important;
+}
+*/
+.emojiToggle{
+  font-family: "Noto Emoji";
+  font-size: 50px;
+  font-weight: 200;
+  cursor:pointer;
+  border-radius: 12px;
+  display:inline-block;
+  padding:12px;
+}
+
+.emojiToggle.activeEmoji, .emojiToggle:hover{
+  background:#fff;
+  color:#000;
+}
+
+/*#emojiKitchen.active{
+  color:#FF00FF;  
+}
+
+#googleEmoji.active{
+  color:#F94AAB;
+}*/
+
+
+.active{
+  color:#F94AAB;
+}
+
+.controls{
+  background:rgba(0,0,0,.9);
+  max-width:40%;
+  padding:24px 48px;
+  border-radius: 50px;
+  position: fixed;
+  bottom:-500px;
+  display:flex;
+  flex-direction: column; 
+  z-index:100000;
+}
+
+.toggles{
+/*  display:none;*/
+}
+
+.link-container{
+  margin-top:-60px;
+}
+#emojiCanvas{
+  font-variant-emoji: text;
+}
+.emojiCharacter{
+  position:absolute;
+  font-size: 28px;
+  font-family: "Noto Emoji", sans-serif;
+/*  animation: gentlePopNegative 0.8s ease-out forwards;*/
+  font-weight: 100;
+  display:inline-block;
+/*  transition: font-size .5s;*/
+  color:#A4A7D4;
+/*   transform-origin: -50% 50%;*/
+  z-index:-1;
+  /*transition: transform 0.2s ease-out;
+            transform-origin: center;*/
+}
+
+.emojiCharacter:hover{
+/*  font-size: 100px;*/
+  
+/*  color:#f00;*/
+/*  cursor: default;*/
+/*  transform: scale(2); */
+}
+
+.notoBG{
+  background-color:#000B24 ;
+}
