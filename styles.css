@@ -154,10 +154,10 @@
 }
 
 /* Logic for scaling based on distance */
-.link{
+/*.link{
    transform-origin: left;
 }
-
+*/
 .link-container .link:hover,.link-container .link.active {
   transform: scale(1.5); /* Scale up hovered link */
   z-index:1000;
@@ -285,7 +285,11 @@
     transition: transform 0.2s ease-out;
     }
 
-   .grid-cell a {
+    .grid-cell .textLink{
+      display:none;
+    }
+
+   .grid-cell a.emoji-link {
       text-decoration: none;
       color: inherit;
       pointer-events: auto;

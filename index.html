@@ -344,7 +344,7 @@ const fillGrid = () => {
     const div = document.createElement("div");
     div.className = "grid-cell";
     div.style.animationDelay = `${i * 40}ms`; // Staggered by 40ms per tile
-    div.innerHTML = `<a href="${link}" target="_blank">${emoji}</a>`;
+    div.innerHTML = `<a  class="emojiLink" href="${link}" target="_blank">${emoji}</a><a class="textLink" href="${link}" target="_blank">Unicode Proposal →</a>`;
     grid.appendChild(div);
   }
 }
