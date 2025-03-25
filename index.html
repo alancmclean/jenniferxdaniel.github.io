@@ -7,26 +7,48 @@
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=DynaPuff:wdth,wght@75..100,400..700&family=Noto+Emoji:wght@300..700&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=DynaPuff:wdth,wght@75..100,400..700&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Noto+Emoji:wght@300..700&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" type="text/css" href="styles.css">
 
-<style>
 
 </style>
 </head>
 <body class="">
-
+<nav>
+  <ul>
+    <li><a href="#">Jennifer Daniel</a></li>
+    <li><a href="#">About</a></li>
+    <li><a href="#">Contact</a></li>
+  </ul>  
+</nav>
 
 <main class="container link-container">
   <canvas id="emojiCanvas"></canvas>
-  <h3 id="unicode" class="link">Unicode</h3>
-  <h3 class="link" id="emojiKitchen">Emoji Kitchen</h3>
-  <h3 class="link" id="googleEmoji">Google Emoji</h3>
-  <h3 class="link" id="noto">Noto Emoji</h3>
-  <h3 id="nyt" class="link">New York Times</h3>
-  <h3 id="editorial" class="link">Editorial</h3>
+  <div class="grid-wrapper">
+    <div class="background-grid" id="backgroundGrid"></div>
+  </div>
 
+  <ul class="sections">
+    <li class="section">
+      <h3 id="unicode" class="header">Unicode</h3>
+    </li>
+    <li class="section">
+      <h3 class="header" id="emojiKitchen">Emoji Kitchen</h3>
+    </li>
+    <li class="section">
+      <h3 class="header" id="noto">Noto Emoji</h3>
+    </li>
+    <li class="section">
+      <h3 class="header" id="googleEmoji">Animated Emoji</h3>
+    </li>
+    <li class="section">
+      <h3 class="header" id="wallpaper">Emoji Wallpapers</h3>
+    </li>
+    <li class="section">
+      <h3 class="header" id="lectures">Lectures</h3>
+    </li>
+  </ul>
   <div class="controls">
     <h4>Noto Emoji</h4>
     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
@@ -56,6 +78,7 @@
       
     </div>
   </div>
+  
 </main>
 
 <script type="text/javascript">
@@ -83,6 +106,7 @@ const stickers = [];
 const clearEverything = (target, newState) => {
   if(activeState === null || activeState != newState){
     cleanupGoogle()
+    cleanupUnicode()
     cleanup()
     cleanupNoto()
     resetLinks(target)
@@ -94,7 +118,8 @@ const showEmojiKitchenSticker = () => {
   const w = window.innerWidth; // Use innerWidth for viewport size
   const h = window.innerHeight;
   const size = Math.random() * 400; // Adjust sticker size
-  const x = Math.random() * (w - size);
+  // const x = Math.random() * (w - size);
+  const x = Math.random() * 100
   const y = Math.random() * (h - size);
   const randomImage = Math.floor(Math.random() * 61);
 
@@ -102,7 +127,7 @@ const showEmojiKitchenSticker = () => {
   img.src = `images/stickers/image_${randomImage}.png`; // Use the image source from the array
   img.className = (Math.random() > .5) ? 'sticker' : 'sticker negative';
 
-  img.style.left = `${x}px`; // Use pixels for positioning with viewport size
+  img.style.left = `${x}%`; // Use pixels for positioning with viewport size
   img.style.top = `${y}px`;
   img.style.width = `${size}px`;
   img.style.height = `${size}px`;
@@ -190,7 +215,8 @@ const showGoogleEmoji = () => {
   const w = window.innerWidth; // Use innerWidth for viewport size
   const h = window.innerHeight;
   const size = Math.random() * 400; // Adjust sticker size
-  const x = Math.random() * (w - size);
+  // const x = Math.random() * (w - size);
+  const x = Math.random() * 100
   const y = h;
   const randomImage = Math.floor(Math.random() * 81);
 
@@ -198,7 +224,7 @@ const showGoogleEmoji = () => {
   img.src = `images/animated/${randomImage}.webp`; // Use the image source from the array
   // console.log('hi 2', img.src)
   img.className = 'googleEmoji';
-  img.style.left = `${x}px`; // Use pixels for positioning with viewport size
+  img.style.left = `${x}%`; // Use pixels for positioning with viewport size
   img.style.top = `${y}px`;
   img.style.width = `${size}px`;
   img.style.height = `${size}px`;
@@ -234,6 +260,120 @@ triggerGoogleEmoji.addEventListener('click', (e) => {
   clearEverything(e.target, 'google')
   startShowingGoogle()
 });
+
+
+const grid = document.getElementById("backgroundGrid");
+const wrapper = document.querySelector(".grid-wrapper");
+const emojiLinks = [
+  { emoji: '🥲', link: "#", text: "emoji" },
+  { emoji: '🥹', link: "#", text: "emoji" },
+  { emoji: '🫡', link: "#", text: "emoji" },
+  { emoji: '🫢', link: "#", text: "emoji" },
+  { emoji: '🫣', link: "#", text: "emoji" },
+  { emoji: '🫤', link: "#", text: "emoji" },
+  { emoji: '🫥', link: "#", text: "emoji" },
+  { emoji: '🫠', link: "#", text: "emoji" },
+  { emoji: '😮', link: "#", text: "emoji" },
+  { emoji: '😶', link: "#", text: "emoji" },
+  { emoji: '😵', link: "#", text: "emoji" },
+  { emoji: '💫', link: "#", text: "emoji" },
+  { emoji: '❤️‍🔥', link: "#", text: "emoji" },
+  { emoji: '❤️‍🩹', link: "#", text: "emoji" },
+  { emoji: '🫂', link: "#", text: "emoji" },
+  { emoji: '🫦', link: "#", text: "emoji" },
+  { emoji: '🫰', link: "#", text: "emoji" },
+  { emoji: '🫱', link: "#", text: "emoji" },
+  { emoji: '🫲', link: "#", text: "emoji" },
+  { emoji: '🪫', link: "#", text: "emoji" },
+  { emoji: '🫗', link: "#", text: "emoji" }
+]
+
+    
+
+const fillGrid = () => {
+  console.log('fill')
+
+  grid.innerHTML = "";
+
+  const gap = 20;
+  const aspect = 8.5 / 11;
+  const totalItems = emojiLinks.length;
+
+  const maxWidth = window.innerWidth;
+  const maxHeight = window.innerHeight;
+
+  let bestCols = 1;
+  let bestRows = totalItems;
+  let bestCellWidth = 0;
+  let bestLayoutHeight = Infinity;
+
+  for (let cols = 1; cols <= totalItems; cols++) {
+    const rows = Math.ceil(totalItems / cols);
+    const totalGapW = (cols - 1) * gap;
+    const totalGapH = (rows - 1) * gap;
+
+    const cellWidth = (maxWidth - totalGapW) / cols;
+    const cellHeight = cellWidth / aspect;
+    const layoutHeight = cellHeight * rows + totalGapH;
+
+    if (layoutHeight <= maxHeight) {
+      // Choose the layout with the *largest* cells that still fit
+      if (cellWidth > bestCellWidth) {
+        bestCols = cols;
+        bestRows = rows;
+        bestCellWidth = cellWidth;
+        bestLayoutHeight = layoutHeight;
+      }
+    }
+  }
+
+  const cellHeight = bestCellWidth / aspect;
+
+  // Apply layout styles
+  grid.style.gridTemplateColumns = `repeat(${bestCols}, ${bestCellWidth}px)`;
+  grid.style.gridAutoRows = `${cellHeight}px`;
+
+  const gridWidth = bestCols * bestCellWidth + (bestCols - 1) * gap;
+  const gridHeight = bestRows * cellHeight + (bestRows - 1) * gap;
+
+  wrapper.style.width = `${gridWidth}px`;
+  wrapper.style.height = `${gridHeight}px`;
+
+  for (let i = 0; i < emojiLinks.length; i++) {
+    const { emoji, link } = emojiLinks[i];
+    const div = document.createElement("div");
+    div.className = "grid-cell";
+    div.style.animationDelay = `${i * 40}ms`; // Staggered by 40ms per tile
+    div.innerHTML = `<a href="${link}" target="_blank">${emoji}</a>`;
+    grid.appendChild(div);
+  }
+}
+
+const onResizeFillGrid = () => {
+  requestAnimationFrame(fillGrid);
+}
+
+const startShowingUnicode = () => {
+  window.addEventListener("resize", onResizeFillGrid);
+  fillGrid()
+};
+
+
+const triggerUnicode = document.getElementById('unicode');
+triggerUnicode.addEventListener('click', (e) => {
+  clearEverything(e.target, 'unicode')
+  startShowingUnicode()
+});
+
+
+const cleanupUnicode = () => {
+  let nodes = document.getElementsByClassName('grid-cell')
+  window.removeEventListener("resize", onResizeFillGrid);
+
+  for (let i = nodes.length - 1; i >= 0; i--) {
+    nodes[i].remove();
+  }
+}
 
 
 
@@ -322,26 +462,19 @@ function poissonDiskSampling(width, height, radius, k = 30) {
 }
 
 
-
-
-
-const showNoto = (e) => {
-  console.log('noto called')
-  renderedEmojis.length = 0;
-
-  // Ensure crisp rendering by accounting for devicePixelRatio
+const sizeCanvas = () => {
+  console.log('sizing')
   const dpr = window.devicePixelRatio || 1;
   canvas.width = window.innerWidth * dpr;
   canvas.height = window.innerHeight * dpr;
-  ctx.scale(dpr, dpr); // Scale drawing to match high-resolution canvas
+  ctx.scale(dpr, dpr); // Scale drawing to match high-resolution canvas 
 
-  ctx.fillStyle = "#000B24"
-  ctx.fillRect(0, 0, canvas.width, canvas.height)
+  positionEmoji()
+}
 
-  // List of emojis to use
-  
 
-  
+const positionEmoji = () => {
+  const dpr = window.devicePixelRatio || 1;
   const emojiSize = Math.min(canvas.width, canvas.height) * 0.015; 
   const radius = emojiSize * 2.5; // Ensure slight spacing
 
@@ -372,10 +505,27 @@ const showNoto = (e) => {
   })
 }
 
+const showNoto = (e) => {
+  console.log('noto called')
+  renderedEmojis.length = 0;
+
+  ctx.fillStyle = "#000B24"
+  ctx.fillRect(0, 0, canvas.width, canvas.height)
+
+  // Ensure crisp rendering by accounting for devicePixelRatio
+  sizeCanvas()
+
+}
+
+// window.addEventListener('resize', () => {
+//   sizeCanvas()
+// });
+
 
 const onMouseMove = (event) => {
   const canvas = document.getElementById("emojiCanvas");
   const ctx = canvas.getContext("2d");
+
 
   const { clientX: mouseX, clientY: mouseY } = event;
   if (!animationFrameId) {
@@ -390,7 +540,7 @@ const onMouseMove = (event) => {
 
           const maxScale = 3.4;
           const minScale = 1;
-          const falloff = 100;
+          const falloff = 110;
           const scale = minScale + (maxScale - minScale) * Math.exp(-distance / falloff);
 
           emoji.scale = scale;
@@ -404,6 +554,7 @@ const onMouseMove = (event) => {
     });
   }
 }
+
 
 
 const triggerNoto = document.getElementById('noto');

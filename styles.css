@@ -10,9 +10,9 @@
     padding:0;
   }
   body {  
-    font-family: "Dynapuff", sans-serif;
-/*    background-color: #000;*/
-    background-color: #000B24;
+    font-family: "Lato", sans-serif;
+    background-color: #000;
+/*    background-color: #000B24;*/
     color: #f9fafb;
     height: 100%;
     margin:0;
@@ -22,7 +22,7 @@
     font-size:4rem;
     margin:0;
     padding:0;
-    text-align:center;
+    text-align:left;
     display:block;
   }
   .container{
@@ -91,7 +91,7 @@
     animation: gentlePopPositive 0.9s ease-out forwards; 
 /*    animation-delay: 1s;*/
     pointer-events:none;
-    z-index:100;
+    z-index:10;
 /*      transform: translateY(-50%) scaleX(0.2);*/
 /*    animation: splatAnimation 0.8s ease-out forwards; /* Apply animation */*/
 
@@ -106,14 +106,10 @@
     position:fixed;
     animation: slideUp 8s ease-out; 
     pointer-events:none;
-    z-index:100;
+    z-index:10;
   }
 
-  .active{
-    z-index:10000;
-    color:red;
-    cursor: pointer;
-  }
+  
   #emojiCanvas{
     width:100%;
     height:100%;
@@ -127,7 +123,7 @@
 /*    display:none;*/
   }
 
-  .link {
+.header {
   transition: transform 0.3s ease;
   cursor: pointer;
 /*  font-size: 16px;*/
@@ -139,6 +135,18 @@
 .link:hover {
   transform: scale(1.15); /* Scale up on hover */
   z-index: 1000; /* Ensure hovered link is on top */
+}
+
+.link-container .sections{
+  z-index:10000;
+}
+
+.sections{
+  list-style-type:none;
+}
+
+.link-container h3{
+  font-family: "Dynapuff", sans-serif;
 }
 
 /* Logic for scaling based on distance */
@@ -247,9 +255,9 @@
 /*  display:none;*/
 }
 
-.link-container{
+/*.link-container{
   margin-top:-60px;
-}
+}*/
 #emojiCanvas{
   font-variant-emoji: text;
 }
@@ -278,4 +286,109 @@
 
 .notoBG{
   background-color:#000B24 ;
+}
+
+.subsection{
+  height:0;
+  overflow:hidden;
+  transition: height .7s;
+  display:flex;
+  justify-content: center;
+}
+
+.active .subsection{
+  height:auto;
+}
+  .grid-wrapper {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+/*      pointer-events: none;*/
+/*      z-index: -1;*/
+    }
+
+
+  .background-grid {
+      display: grid;
+      gap: 20px;
+/*      pointer-events: none;*/
+    }
+
+ .grid-cell {
+      background: rgba(255, 255, 255, 0.05);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      border-radius: 6px;
+      aspect-ratio: 8.5 / 11;
+      animation: fadeIn 0.4s ease-out forwards;
+       transform: scale(0.95);
+    opacity: 0;
+    transition: transform 0.2s ease-out;
+    }
+
+   .grid-cell a {
+      text-decoration: none;
+      color: inherit;
+      pointer-events: auto;
+      transition: transform 0.2s ease-out;
+      z-index: 1;
+    }
+      @keyframes fadeIn {
+    0% {
+      transform: scale(0.8);
+      opacity: 0;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 1;
+    }
+  }
+
+  /*.grid-cell a:hover {
+    transform: scale(3);
+  }*/
+  .grid-cell:hover a{
+/*    transition: transform 0.2s ease-out;*/
+    transform: scale(2);
+  }
+    
+nav{
+  position:fixed;
+  top:0;
+  left:0;
+  right:0;
+  padding:16px;
+}
+
+nav ul{
+  list-style: none;
+  margin:0;
+  padding:0;
+  display:flex;
+}
+
+nav li{
+/*  display:flex;*/
+  padding:16px;
+}
+
+nav li:first-child{
+  width: 100%;
+}
+
+nav a{
+  font-family: "Lato", serif;
+  text-transform: uppercase;
+  color:#fff;
+  text-decoration: none;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+}
+
+nav a.active, nav a:hover{
+  text-decoration:underline;
+  text-underline-offset: 6px;
 }
