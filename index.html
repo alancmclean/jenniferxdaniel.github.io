@@ -17,9 +17,9 @@
 <body class="">
 <nav>
   <ul>
-    <li><a href="#">Jennifer Daniel</a></li>
-    <li><a href="#">About</a></li>
-    <li><a href="#">Contact</a></li>
+    <li><a href="https://www.jenniferxdaniel.com">Jennifer Daniel</a></li>
+    <li><a target="_blank" href="https://en.wikipedia.org/wiki/Jennifer_Daniel_(illustrator)">About</a></li>
+    <li><a target="_blank" href="https://www.linkedin.com/in/jenniferdaniel">Contact</a></li>
   </ul>  
 </nav>
 
@@ -42,11 +42,11 @@
     <li class="section">
       <h3 class="header link" id="googleEmoji">Animated Emoji</h3>
     </li>
-    <li class="section">
+    <!-- <li class="section">
       <h3 class="header link" id="wallpaper">Wallpapers</h3>
-    </li>
+    </li> -->
     <li class="section">
-      <h3 class="header link" id="lectures">Lectures</h3>
+      <h3 class="header link" id="lectures">Books</h3>
     </li>
   </ul>
   <div class="controls">
@@ -72,7 +72,11 @@
 
           <div class="emojiToggle" data-emoji="🙂‍↕︎">🙂‍↕︎</div>
       <div class="emojiToggle" data-emoji="🫠">🫠</div>
-
+      <div class="emojiToggle" data-emoji="🐐">🐐</div>
+      <div class="emojiToggle" data-emoji="😻">😻</div>
+      <div class="emojiToggle" data-emoji="🌟">🌟</div>
+          <div class="emojiToggle" data-emoji="🍄">🍄</div>
+      
 
 
       
@@ -88,7 +92,10 @@ let intervalId = null;
 let activeState = null
 let startTimestamp;
 let animationFrameId;
-const emojis = ["🐢", "💕", "🍕", "🐛", "🎷", "🎶", "🥳", "🎉", "🫠", "🙂‍↕︎"];
+
+
+
+const emojis = ["🐢", "💕", "🍕", "🐛", "🎷", "🎶", "🥳", "🎉", "🫠", "🙂‍↕︎", "🍄", "🌟", "😻", "🐐"];
 
 const getRandomEmojis = (arr, n) => {
   const s = [...arr].sort(() => Math.random() - 0.5);
@@ -218,7 +225,7 @@ const showGoogleEmoji = () => {
   // const x = Math.random() * (w - size);
   const x = Math.random() * 100
   const y = h;
-  const randomImage = Math.floor(Math.random() * 81);
+  const randomImage = Math.floor(Math.random() * 89);
 
   let img = document.createElement('img');
   img.src = `images/animated/${randomImage}.webp`; // Use the image source from the array
@@ -265,27 +272,35 @@ triggerGoogleEmoji.addEventListener('click', (e) => {
 const grid = document.getElementById("backgroundGrid");
 const wrapper = document.querySelector(".grid-wrapper");
 const emojiLinks = [
-  { emoji: '🥲', link: "#", text: "emoji" },
-  { emoji: '🥹', link: "#", text: "emoji" },
-  { emoji: '🫡', link: "#", text: "emoji" },
-  { emoji: '🫢', link: "#", text: "emoji" },
-  { emoji: '🫣', link: "#", text: "emoji" },
-  { emoji: '🫤', link: "#", text: "emoji" },
-  { emoji: '🫥', link: "#", text: "emoji" },
-  { emoji: '🫠', link: "#", text: "emoji" },
-  { emoji: '😮', link: "#", text: "emoji" },
-  { emoji: '😶', link: "#", text: "emoji" },
-  { emoji: '😵', link: "#", text: "emoji" },
-  { emoji: '💫', link: "#", text: "emoji" },
-  { emoji: '❤️‍🔥', link: "#", text: "emoji" },
-  { emoji: '❤️‍🩹', link: "#", text: "emoji" },
-  { emoji: '🫂', link: "#", text: "emoji" },
-  { emoji: '🫦', link: "#", text: "emoji" },
-  { emoji: '🫰', link: "#", text: "emoji" },
-  { emoji: '🫱', link: "#", text: "emoji" },
-  { emoji: '🫲', link: "#", text: "emoji" },
-  { emoji: '🪫', link: "#", text: "emoji" },
-  { emoji: '🫗', link: "#", text: "emoji" }
+  
+  
+  { emoji: '🙂‍↔️', link: "https://www.unicode.org/L2/L2023/23034-head-shaking-horizontal.pdf", text: "emoji" },
+  { emoji: '🫤', link: "https://www.unicode.org/L2/L2020/20219-face-with-diagonal-mouth-emoji.pdf", text: "emoji" },
+  { emoji: '🫨', link: "https://www.unicode.org/L2/L2021/21214-shaking-face-emoji.pdf", text: "emoji" },
+  { emoji: '😵‍💫', link: "https://www.unicode.org/L2/L2020/20131-face-with-spiral-eyes.pdf", text: "emoji" },
+  { emoji: '🥲', link: "https://www.unicode.org/L2/L2019/19147-smiling-face-tear.pdf", text: "emoji" },
+  { emoji: '🥹', link: "https://www.unicode.org/L2/L2020/20064-face-holding-back-tears.pdf", text: "emoji" },
+  { emoji: '🫡', link: "https://www.unicode.org/L2/L2019/19396-saluting-face-emoji.pdf", text: "emoji" },
+  { emoji: '🫢', link: "https://www.unicode.org/L2/L2019/19304-face-hands-over-mouth.pdf", text: "emoji" },
+  // { emoji: '🫢', link: "https://www.unicode.org/L2/L2020/20066-breath-face-emoji.pdf", text: "emoji" },
+  { emoji: '🐦‍🔥', link: "https://www.unicode.org/L2/L2020/20130-face-in-clouds-emoji.pdf", text: "emoji" },
+  { emoji: '😶‍🌫️', link: "https://www.unicode.org/L2/L2020/20130-face-in-clouds-emoji.pdf", text: "emoji" },
+  { emoji: '🫣', link: "https://www.unicode.org/L2/L2019/19378-face-with-peeking-eye.pdf", text: "emoji" },
+  { emoji: '🫥', link: "https://www.unicode.org/L2/L2020/20223-dotted-line-face.pdf", text: "emoji" },
+  { emoji: '🫠', link: "https://www.unicode.org/L2/L2020/20072-melting-face-emoji.pdf", text: "emoji" },
+  // { emoji: '😮', link: "#", text: "emoji" },
+  // { emoji: '😶', link: "#", text: "emoji" },
+  { emoji: '😵', link: "https://www.unicode.org/L2/L2019/19303-face-with-x-eyes.pdf", text: "emoji" },
+  // { emoji: '💫', link: "#", text: "emoji" },
+  { emoji: '❤️‍🔥', link: "https://www.unicode.org/L2/L2020/20128-heart-on-fire-emoji.pdf", text: "emoji" },
+  { emoji: '❤️‍🩹', link: "https://www.unicode.org/L2/L2019/19380-mending-heart-emoji.pdf", text: "emoji" },
+  { emoji: '🪷', link: "https://www.unicode.org/L2/L2019/19371-lotus-emoji.pdf", text: "emoji" },
+  { emoji: '🫂', link: "https://www.unicode.org/L2/L2019/19109-two-people-hugging.pdf", text: "emoji" },
+  { emoji: '🫦', link: "https://www.unicode.org/L2/L2019/19219-biting-lip-emoji.pdf", text: "emoji" },
+  { emoji: '🫰', link: "https://www.unicode.org/L2/L2019/19327-thumb-index-crossed.pdf", text: "emoji" },
+  
+  { emoji: '🪫', link: "https://www.unicode.org/L2/L2019/19316-low-battery-.pdf", text: "emoji" },
+  // { emoji: '🫗', link: "#", text: "emoji" }
 ]
 
     

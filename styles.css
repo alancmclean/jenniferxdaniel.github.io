@@ -199,14 +199,14 @@
 
 .controls{
   background:rgba(0,0,0,.9);
-  max-width:40%;
+  max-width:400px;
   padding:24px 48px;
   border-radius: 50px;
-  position: fixed;
+  position: absolute;
   bottom:-500px;
-  display:flex;
+  /*display:flex;
   flex-direction: column; 
-  z-index:100000;
+  z-index:100000;*/
 }
 
 .toggles{
@@ -302,26 +302,34 @@
       text-decoration: none;
       color: inherit;
       pointer-events: auto;
-      transition: transform 0.2s ease-out;
+      transition: transform .8s cubic-bezier(0.175, 0.885, 0.320, 1.275);
       z-index: 1;
       text-decoration: none !important;
     }
 
     .grid-cell a.textLink{
-      display:none;
-      font-size:11px;
+      
+      font-size:14px;
       color:#fff;
       text-align:center;
-      padding:8px 12px;
+      padding:8px 16px;
       text-decoration: none;
       position: absolute;
-      bottom: 20px;
+      bottom: 10%;
       background:rgba(255,255,255,.1);
       border-radius:20px;
+      transition: opacity .5s, bottom .7s, transform .7s;
+      opacity: 0;
+      transform: scale(.7);
     }
 
     .grid-cell:hover a.textLink{
-      display:block;
+      opacity: 1;
+      bottom: 20%;
+      transform: scale(1);
+    }
+    .grid-cell:hover a.emojiLink{
+      transform:scale(2);
 
     }
 
