@@ -4,6 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Jennifer Daniel</title>
+<link rel="icon" type="image/x-icon" href="images/favicon.ico">
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -42,9 +43,6 @@
     <li class="section">
       <h3 class="header link" id="googleEmoji">Animated Emoji</h3>
     </li>
-    <!-- <li class="section">
-      <h3 class="header link" id="wallpaper">Wallpapers</h3>
-    </li> -->
     <li class="section">
       <h3 class="header link" id="lectures">Books</h3>
     </li>
@@ -86,528 +84,571 @@
 </main>
 
 <script type="text/javascript">
-const DEFAULT_SHOW_INTERVAL = 50;
-let showInterval = DEFAULT_SHOW_INTERVAL;
-let intervalId = null;
-let activeState = null
-let startTimestamp;
-let animationFrameId;
+  console.log('hellow')
+document.addEventListener('DOMContentLoaded', function() {
+  const DEFAULT_SHOW_INTERVAL = 50;
+  let showInterval = DEFAULT_SHOW_INTERVAL;
+  let intervalId = null;
+  let activeState = null
+  let startTimestamp;
+  let animationFrameId;
 
 
 
-const emojis = ["🐢", "💕", "🍕", "🐛", "🎷", "🎶", "🥳", "🎉", "🫠", "🙂‍↕︎", "🍄", "🌟", "😻", "🐐"];
+  const emojis = ["🐢", "💕", "🍕", "🐛", "🎷", "🎶", "🥳", "🎉", "🫠", "🙂‍↕︎", "🍄", "🌟", "😻", "🐐"];
 
-const getRandomEmojis = (arr, n) => {
-  const s = [...arr].sort(() => Math.random() - 0.5);
-  return n > arr.length ? s : s.slice(0, n);
-};
+  const getRandomEmojis = (arr, n) => {
+    const s = [...arr].sort(() => Math.random() - 0.5);
+    return n > arr.length ? s : s.slice(0, n);
+  };
 
 
-const canvas = document.getElementById("emojiCanvas");
-const ctx = canvas.getContext("2d");
-
-let renderedEmojis = []
-
-// ids and timestamps for all the stickers
-const stickers = [];
-const clearEverything = (target, newState) => {
-  if(activeState === null || activeState != newState){
-    cleanupGoogle()
-    cleanupUnicode()
-    cleanup()
-    cleanupNoto()
-    resetLinks(target)
-  }
-  activeState = newState;
-}
-
-const showEmojiKitchenSticker = () => {
-  const w = window.innerWidth; // Use innerWidth for viewport size
-  const h = window.innerHeight;
-  const size = Math.random() * 400; // Adjust sticker size
-  // const x = Math.random() * (w - size);
-  const x = Math.random() * 100
-  const y = Math.random() * (h - size);
-  const randomImage = Math.floor(Math.random() * 61);
-
-  let img = document.createElement('img');
-  img.src = `images/stickers/image_${randomImage}.png`; // Use the image source from the array
-  img.className = (Math.random() > .5) ? 'sticker' : 'sticker negative';
-
-  img.style.left = `${x}%`; // Use pixels for positioning with viewport size
-  img.style.top = `${y}px`;
-  img.style.width = `${size}px`;
-  img.style.height = `${size}px`;
-
-  // set id might not be unique but its fine...
-  const imgId = Date.now();
-  img.id = imgId;
-
-  document.body.appendChild(img);
-  stickers.push(imgId)
-};
-
-const startShowing = (e) => {
-  
-  clearInterval(intervalId); // Clear any existing interval
-  showInterval = DEFAULT_SHOW_INTERVAL; // Reset interval on new hover
-  intervalId = setInterval(() => {
-
-    showEmojiKitchenSticker();
-    showEmojiKitchenSticker();
-
-    if (showInterval > 50) {
-      showInterval -= 10;
-    } else if (showInterval < 2) {
-        showInterval = 2; // Prevent interval from going too low
-    }
-    clearInterval(intervalId); // Clear and reset with new interval
-    intervalId = setInterval(startShowing, showInterval); // Call startShowing again with updated interval
-  }, showInterval);
-};
-
-const cleanup = () => {
-  clearInterval(intervalId); // Stop the interval when mouse leaves
-  intervalId = null
-  const stickerElements = document.getElementsByClassName('sticker');
-  // Remove in reverse order to avoid index issues
-  for (let i = stickerElements.length - 1; i >= 0; i--) {
-    stickerElements[i].remove();
-  }
-};
-
-const triggerEmoji = document.getElementById('emojiKitchen');
-triggerEmoji.addEventListener('click', (e) => {
-  clearEverything(e.target, 'emojiKitchen')
-  startShowing()
-});
-
-
-/////////////////////////////////////////////
-// emoji
-
-const resetLinks = (target, newActiveState) => {
-  console.log(target)
-  let activeLink = document.getElementsByClassName('active')[0]
-  if(activeLink){
-    activeLink.classList.remove('active')
-  }
-  target.classList.add('active')
-  activeState = newActiveState
-}
-
-const startShowingGoogle = () => {
-
-  clearInterval(intervalId); // Clear any existing interval
-  showInterval = (intervalId === null) ? 0 : 1000; // Reset interval on new hover
-  intervalId = setInterval(() => {
-
-    showGoogleEmoji();
-    showGoogleEmoji();
-    showGoogleEmoji();
-    showGoogleEmoji();
-    // showEmojiKitchenSticker();
-    if (showInterval > 50) {
-      showInterval -= 10;
-    } else if (showInterval < 2) {
-        showInterval = 2; // Prevent interval from going too low
-    }
-    clearInterval(intervalId); // Clear and reset with new interval
-    intervalId = setInterval(startShowingGoogle, showInterval); // Call startShowing again with updated interval
-  }, showInterval);
-};
-
-
-const showGoogleEmoji = () => {
-  const w = window.innerWidth; // Use innerWidth for viewport size
-  const h = window.innerHeight;
-  const size = Math.random() * 400; // Adjust sticker size
-  // const x = Math.random() * (w - size);
-  const x = Math.random() * 100
-  const y = h;
-  const randomImage = Math.floor(Math.random() * 89);
-
-  let img = document.createElement('img');
-  img.src = `images/animated/${randomImage}.webp`; // Use the image source from the array
-  // console.log('hi 2', img.src)
-  img.className = 'googleEmoji';
-  img.style.left = `${x}%`; // Use pixels for positioning with viewport size
-  img.style.top = `${y}px`;
-  img.style.width = `${size}px`;
-  img.style.height = `${size}px`;
-  img.id = `img-${Math.round(Math.random() * 10000)}`
-  
-  setTimeout(()=> {
-    const el = document.getElementById(img.id)
-    if(el){
-      el.remove()
-    }
-  }, 10000)
-
-  // set id might not be unique but its fine...
-  const imgId = Date.now();
-  img.id = imgId;
-
-  document.body.appendChild(img);
-  stickers.push(imgId)
-};
-
-const cleanupGoogle = () => {
-  clearInterval(intervalId); // Stop the interval when mouse leaves
-  intervalId = null
-  const emojiElements = document.getElementsByClassName('googleEmoji');
-  // Remove in reverse order to avoid index issues
-  for (let i = emojiElements.length - 1; i >= 0; i--) {
-    emojiElements[i].remove();
-  }
-};
-
-const triggerGoogleEmoji = document.getElementById('googleEmoji');
-triggerGoogleEmoji.addEventListener('click', (e) => {
-  clearEverything(e.target, 'google')
-  startShowingGoogle()
-});
-
-
-const grid = document.getElementById("backgroundGrid");
-const wrapper = document.querySelector(".grid-wrapper");
-const emojiLinks = [
-  
-  
-  { emoji: '🙂‍↔️', link: "https://www.unicode.org/L2/L2023/23034-head-shaking-horizontal.pdf", text: "emoji" },
-  { emoji: '🫤', link: "https://www.unicode.org/L2/L2020/20219-face-with-diagonal-mouth-emoji.pdf", text: "emoji" },
-  { emoji: '🫨', link: "https://www.unicode.org/L2/L2021/21214-shaking-face-emoji.pdf", text: "emoji" },
-  { emoji: '😵‍💫', link: "https://www.unicode.org/L2/L2020/20131-face-with-spiral-eyes.pdf", text: "emoji" },
-  { emoji: '🥲', link: "https://www.unicode.org/L2/L2019/19147-smiling-face-tear.pdf", text: "emoji" },
-  { emoji: '🥹', link: "https://www.unicode.org/L2/L2020/20064-face-holding-back-tears.pdf", text: "emoji" },
-  { emoji: '🫡', link: "https://www.unicode.org/L2/L2019/19396-saluting-face-emoji.pdf", text: "emoji" },
-  { emoji: '🫢', link: "https://www.unicode.org/L2/L2019/19304-face-hands-over-mouth.pdf", text: "emoji" },
-  // { emoji: '🫢', link: "https://www.unicode.org/L2/L2020/20066-breath-face-emoji.pdf", text: "emoji" },
-  { emoji: '🐦‍🔥', link: "https://www.unicode.org/L2/L2020/20130-face-in-clouds-emoji.pdf", text: "emoji" },
-  { emoji: '😶‍🌫️', link: "https://www.unicode.org/L2/L2020/20130-face-in-clouds-emoji.pdf", text: "emoji" },
-  { emoji: '🫣', link: "https://www.unicode.org/L2/L2019/19378-face-with-peeking-eye.pdf", text: "emoji" },
-  { emoji: '🫥', link: "https://www.unicode.org/L2/L2020/20223-dotted-line-face.pdf", text: "emoji" },
-  { emoji: '🫠', link: "https://www.unicode.org/L2/L2020/20072-melting-face-emoji.pdf", text: "emoji" },
-  // { emoji: '😮', link: "#", text: "emoji" },
-  // { emoji: '😶', link: "#", text: "emoji" },
-  { emoji: '😵', link: "https://www.unicode.org/L2/L2019/19303-face-with-x-eyes.pdf", text: "emoji" },
-  // { emoji: '💫', link: "#", text: "emoji" },
-  { emoji: '❤️‍🔥', link: "https://www.unicode.org/L2/L2020/20128-heart-on-fire-emoji.pdf", text: "emoji" },
-  { emoji: '❤️‍🩹', link: "https://www.unicode.org/L2/L2019/19380-mending-heart-emoji.pdf", text: "emoji" },
-  { emoji: '🪷', link: "https://www.unicode.org/L2/L2019/19371-lotus-emoji.pdf", text: "emoji" },
-  { emoji: '🫂', link: "https://www.unicode.org/L2/L2019/19109-two-people-hugging.pdf", text: "emoji" },
-  { emoji: '🫦', link: "https://www.unicode.org/L2/L2019/19219-biting-lip-emoji.pdf", text: "emoji" },
-  { emoji: '🫰', link: "https://www.unicode.org/L2/L2019/19327-thumb-index-crossed.pdf", text: "emoji" },
-  
-  { emoji: '🪫', link: "https://www.unicode.org/L2/L2019/19316-low-battery-.pdf", text: "emoji" },
-  // { emoji: '🫗', link: "#", text: "emoji" }
-]
-
-    
-
-const fillGrid = () => {
-  console.log('fill')
-
-  grid.innerHTML = "";
-
-  const gap = 20;
-  const aspect = 8.5 / 11;
-  const totalItems = emojiLinks.length;
-
-  const maxWidth = window.innerWidth;
-  const maxHeight = window.innerHeight;
-
-  let bestCols = 1;
-  let bestRows = totalItems;
-  let bestCellWidth = 0;
-  let bestLayoutHeight = Infinity;
-
-  for (let cols = 1; cols <= totalItems; cols++) {
-    const rows = Math.ceil(totalItems / cols);
-    const totalGapW = (cols - 1) * gap;
-    const totalGapH = (rows - 1) * gap;
-
-    const cellWidth = (maxWidth - totalGapW) / cols;
-    const cellHeight = cellWidth / aspect;
-    const layoutHeight = cellHeight * rows + totalGapH;
-
-    if (layoutHeight <= maxHeight) {
-      // Choose the layout with the *largest* cells that still fit
-      if (cellWidth > bestCellWidth) {
-        bestCols = cols;
-        bestRows = rows;
-        bestCellWidth = cellWidth;
-        bestLayoutHeight = layoutHeight;
-      }
-    }
-  }
-
-  const cellHeight = bestCellWidth / aspect;
-
-  // Apply layout styles
-  grid.style.gridTemplateColumns = `repeat(${bestCols}, ${bestCellWidth}px)`;
-  grid.style.gridAutoRows = `${cellHeight}px`;
-
-  const gridWidth = bestCols * bestCellWidth + (bestCols - 1) * gap;
-  const gridHeight = bestRows * cellHeight + (bestRows - 1) * gap;
-
-  wrapper.style.width = `${gridWidth}px`;
-  wrapper.style.height = `${gridHeight}px`;
-
-  for (let i = 0; i < emojiLinks.length; i++) {
-    const { emoji, link } = emojiLinks[i];
-    const div = document.createElement("div");
-    div.className = "grid-cell";
-    div.style.animationDelay = `${i * 40}ms`; // Staggered by 40ms per tile
-    div.innerHTML = `<a  class="emojiLink" href="${link}" target="_blank">${emoji}</a><a class="textLink" href="${link}" target="_blank">Unicode Proposal →</a>`;
-    grid.appendChild(div);
-  }
-}
-
-const onResizeFillGrid = () => {
-  requestAnimationFrame(fillGrid);
-}
-
-const startShowingUnicode = () => {
-  window.addEventListener("resize", onResizeFillGrid);
-  fillGrid()
-};
-
-
-const triggerUnicode = document.getElementById('unicode');
-triggerUnicode.addEventListener('click', (e) => {
-  clearEverything(e.target, 'unicode')
-  startShowingUnicode()
-});
-
-
-const cleanupUnicode = () => {
-  let nodes = document.getElementsByClassName('grid-cell')
-  window.removeEventListener("resize", onResizeFillGrid);
-
-  for (let i = nodes.length - 1; i >= 0; i--) {
-    nodes[i].remove();
-  }
-}
-
-
-
-//////////////////////////////////////////////////////
-// noto
-//////////////////////////////////////////////////////
-const random = () => {
-  if (random.seed) {
-    var x = Math.sin(random.seed++) * 10000;
-    return x - Math.floor(x);
-  }
-  return Math.random();
-}
-
-// // List of emojis to use
-// const emojis = ["😀", "🎉", "🔥", "🚀", "🌈", "🐱", "🌟", "🍕", "🦄", "🎸"];
-
-// Poisson Disk Sampling (Bridson's Algorithm)
-function poissonDiskSampling(width, height, radius, k = 30) {
-  console.log('disc')
-    const gridSize = radius / Math.sqrt(2);
-    const cols = Math.ceil(width / gridSize);
-    const rows = Math.ceil(height / gridSize);
-    const grid = Array(cols * rows).fill(null);
-    const active = [];
-    const points = [];
-
-    function toGrid(x, y) {
-        return [Math.floor(x / gridSize), Math.floor(y / gridSize)];
-    }
-
-    function inBounds(x, y) {
-        return x >= 0 && y >= 0 && x < width && y < height;
-    }
-
-    function isFarEnough(x, y) {
-        const [gx, gy] = toGrid(x, y);
-        for (let i = -2; i <= 2; i++) {
-            for (let j = -2; j <= 2; j++) {
-                const nx = gx + i, ny = gy + j;
-                if (nx >= 0 && ny >= 0 && nx < cols && ny < rows) {
-                    const idx = nx + ny * cols;
-                    const p = grid[idx];
-                    if (p) {
-                        const dx = p.x - x, dy = p.y - y;
-                        if (dx * dx + dy * dy < radius * radius) return false;
-                    }
-                }
-            }
-        }
-        return true;
-    }
-
-    function addPoint(x, y) {
-        const [gx, gy] = toGrid(x, y);
-        const idx = gx + gy * cols;
-        grid[idx] = { x, y };
-        points.push({ x, y });
-        active.push({ x, y });
-    }
-
-    addPoint(Math.random() * width, Math.random() * height);
-
-    while (active.length > 0) {
-        const randIndex = Math.floor(Math.random() * active.length);
-        const point = active[randIndex];
-        let placed = false;
-
-        for (let i = 0; i < k; i++) {
-            const angle = Math.random() * Math.PI * 2;
-            const r = radius * (1 + Math.random() * 0.5);
-            const newX = point.x + Math.cos(angle) * r;
-            const newY = point.y + Math.sin(angle) * r;
-
-            if (inBounds(newX, newY) && isFarEnough(newX, newY)) {
-                addPoint(newX, newY);
-                placed = true;
-                break;
-            }
-        }
-
-        if (!placed) active.splice(randIndex, 1);
-    }
-
-    return points;
-}
-
-
-const sizeCanvas = () => {
-  console.log('sizing')
-  const dpr = window.devicePixelRatio || 1;
-  canvas.width = window.innerWidth * dpr;
-  canvas.height = window.innerHeight * dpr;
-  ctx.scale(dpr, dpr); // Scale drawing to match high-resolution canvas 
-
-  positionEmoji()
-}
-
-
-const positionEmoji = () => {
-  const dpr = window.devicePixelRatio || 1;
-  const emojiSize = Math.min(canvas.width, canvas.height) * 0.015; 
-  const radius = emojiSize * 2.5; // Ensure slight spacing
-
-  // Get Poisson Disk points
-  const points = poissonDiskSampling(canvas.width / dpr, canvas.height / dpr, radius);
-
-  // Draw emojis
-  
-  ctx.textBaseline = "middle";
-  ctx.textAlign = "center";
-  ctx.fillStyle = "#A4A7D4";
-
-  let emojiSet = getRandomEmojis(emojis, 3)
-  console.log(emojiSet)
-
-  points.forEach(({ x, y }) => {
-    const emoji = emojiSet[Math.floor(Math.random() * emojiSet.length)];
-    ctx.fillText(emoji, x, y);
-    ctx.font = `200 ${emojiSize}px "Noto Emoji"`;
-
-
-    renderedEmojis.push({
-      x: x,
-      y: y,
-      scale: 1,
-      emoji: emoji
-    })
-  })
-}
-
-const showNoto = (e) => {
-  console.log('noto called')
-  renderedEmojis.length = 0;
-
-  ctx.fillStyle = "#000B24"
-  ctx.fillRect(0, 0, canvas.width, canvas.height)
-
-  // Ensure crisp rendering by accounting for devicePixelRatio
-  sizeCanvas()
-
-}
-
-// window.addEventListener('resize', () => {
-//   sizeCanvas()
-// });
-
-
-const onMouseMove = (event) => {
   const canvas = document.getElementById("emojiCanvas");
   const ctx = canvas.getContext("2d");
 
+  let renderedEmojis = []
 
-  const { clientX: mouseX, clientY: mouseY } = event;
-  if (!animationFrameId) {
-      animationFrameId = requestAnimationFrame(() => {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        renderedEmojis.forEach((emoji) => {
-          const centerX = emoji.x + 5;
-          const centerY = emoji.y + 5;
-          const dx = centerX - mouseX;
-          const dy = centerY - mouseY;
-          const distance = Math.sqrt(dx * dx + dy * dy);
-
-          const maxScale = 3.4;
-          const minScale = 1;
-          const falloff = 110;
-          const scale = minScale + (maxScale - minScale) * Math.exp(-distance / falloff);
-
-          emoji.scale = scale;
-          const emojiSize = Math.min(canvas.width, canvas.height) * 0.015;
-
-          ctx.font = `200 ${emojiSize * emoji.scale}px "Noto Emoji"`;
-          ctx.fillText(emoji.emoji, emoji.x, emoji.y);
-        });
-
-        animationFrameId = null; // Reset for the next frame
-    });
+  // ids and timestamps for all the stickers
+  const stickers = [];
+  const clearEverything = (target, newState) => {
+    if(activeState === null || activeState != newState){
+      cleanupGoogle()
+      cleanupUnicode()
+      cleanup()
+      cleanupNoto()
+      resetLinks(target)
+    }
+    activeState = newState;
   }
-}
+
+  const showEmojiKitchenSticker = () => {
+    const w = window.innerWidth; // Use innerWidth for viewport size
+    const h = window.innerHeight;
+    const size = Math.random() * 400; // Adjust sticker size
+    // const x = Math.random() * (w - size);
+    const x = Math.random() * 100
+    const y = Math.random() * (h - size);
+    const randomImage = Math.floor(Math.random() * 61);
+
+    let img = document.createElement('img');
+    img.src = `images/stickers/image_${randomImage}.png`; // Use the image source from the array
+    img.className = (Math.random() > .5) ? 'sticker' : 'sticker negative';
+
+    img.style.left = `${x}%`; // Use pixels for positioning with viewport size
+    img.style.top = `${y}px`;
+    img.style.width = `${size}px`;
+    img.style.height = `${size}px`;
+
+    // set id might not be unique but its fine...
+    const imgId = Date.now();
+    img.id = imgId;
+
+    document.body.appendChild(img);
+    stickers.push(imgId)
+  };
+
+  const startShowing = (e) => {
+    
+    clearInterval(intervalId); // Clear any existing interval
+    showInterval = DEFAULT_SHOW_INTERVAL; // Reset interval on new hover
+    intervalId = setInterval(() => {
+
+      showEmojiKitchenSticker();
+      showEmojiKitchenSticker();
+
+      if (showInterval > 50) {
+        showInterval -= 10;
+      } else if (showInterval < 2) {
+          showInterval = 2; // Prevent interval from going too low
+      }
+      clearInterval(intervalId); // Clear and reset with new interval
+      intervalId = setInterval(startShowing, showInterval); // Call startShowing again with updated interval
+    }, showInterval);
+  };
+
+  const cleanup = () => {
+    clearInterval(intervalId); // Stop the interval when mouse leaves
+    intervalId = null
+    const stickerElements = document.getElementsByClassName('sticker');
+    // Remove in reverse order to avoid index issues
+    for (let i = stickerElements.length - 1; i >= 0; i--) {
+      stickerElements[i].remove();
+    }
+  };
+
+  const triggerEmoji = document.getElementById('emojiKitchen');
+    if(triggerEmoji){
+        triggerEmoji.addEventListener('click', (e) => {
+        console.log('hiiiiii')
+        clearEverything(e.target, 'emojiKitchen')
+        startShowing()
+        });
+    }
+
+
+  /////////////////////////////////////////////
+  // emoji
+
+  const resetLinks = (target, newActiveState) => {
+    console.log(target)
+    let activeLink = document.getElementsByClassName('active')[0]
+    if(activeLink){
+      activeLink.classList.remove('active')
+    }
+    target.classList.add('active')
+    activeState = newActiveState
+  }
+
+  const startShowingGoogle = () => {
+
+    clearInterval(intervalId); // Clear any existing interval
+    showInterval = (intervalId === null) ? 0 : 1000; // Reset interval on new hover
+    intervalId = setInterval(() => {
+
+      showGoogleEmoji();
+      showGoogleEmoji();
+      showGoogleEmoji();
+      showGoogleEmoji();
+      // showEmojiKitchenSticker();
+      if (showInterval > 50) {
+        showInterval -= 10;
+      } else if (showInterval < 2) {
+          showInterval = 2; // Prevent interval from going too low
+      }
+      clearInterval(intervalId); // Clear and reset with new interval
+      intervalId = setInterval(startShowingGoogle, showInterval); // Call startShowing again with updated interval
+    }, showInterval);
+  };
+
+
+  const showGoogleEmoji = () => {
+    const w = window.innerWidth; // Use innerWidth for viewport size
+    const h = window.innerHeight;
+    const size = Math.random() * 400; // Adjust sticker size
+    // const x = Math.random() * (w - size);
+    const x = Math.random() * 100
+    const y = h;
+    const randomImage = Math.floor(Math.random() * 89);
+
+    let img = document.createElement('img');
+    img.src = `images/animated/${randomImage}.webp`; // Use the image source from the array
+    // console.log('hi 2', img.src)
+    img.className = 'googleEmoji';
+    img.style.left = `${x}%`; // Use pixels for positioning with viewport size
+    img.style.top = `${y}px`;
+    img.style.width = `${size}px`;
+    img.style.height = `${size}px`;
+    img.id = `img-${Math.round(Math.random() * 10000)}`
+    
+    setTimeout(()=> {
+      const el = document.getElementById(img.id)
+      if(el){
+        el.remove()
+      }
+    }, 10000)
+
+    // set id might not be unique but its fine...
+    const imgId = Date.now();
+    img.id = imgId;
+
+    document.body.appendChild(img);
+    stickers.push(imgId)
+  };
+
+  const cleanupGoogle = () => {
+    clearInterval(intervalId); // Stop the interval when mouse leaves
+    intervalId = null
+    const emojiElements = document.getElementsByClassName('googleEmoji');
+    // Remove in reverse order to avoid index issues
+    for (let i = emojiElements.length - 1; i >= 0; i--) {
+      emojiElements[i].remove();
+    }
+  };
+
+  const triggerGoogleEmoji = document.getElementById('googleEmoji');
+    if(triggerGoogleEmoji){
+        triggerGoogleEmoji.addEventListener('click', (e) => {
+        clearEverything(e.target, 'google')
+        startShowingGoogle()
+        });
+    }
+
+
+  const grid = document.getElementById("backgroundGrid");
+  const wrapper = document.querySelector(".grid-wrapper");
+  const emojiLinks = [
+    
+    
+    { emoji: '🙂‍↔️', link: "https://www.unicode.org/L2/L2023/23034-head-shaking-horizontal.pdf", text: "emoji" },
+    { emoji: '🫤', link: "https://www.unicode.org/L2/L2020/20219-face-with-diagonal-mouth-emoji.pdf", text: "emoji" },
+    { emoji: '🫨', link: "https://www.unicode.org/L2/L2021/21214-shaking-face-emoji.pdf", text: "emoji" },
+    { emoji: '😵‍💫', link: "https://www.unicode.org/L2/L2020/20131-face-with-spiral-eyes.pdf", text: "emoji" },
+    { emoji: '🥲', link: "https://www.unicode.org/L2/L2019/19147-smiling-face-tear.pdf", text: "emoji" },
+    { emoji: '🥹', link: "https://www.unicode.org/L2/L2020/20064-face-holding-back-tears.pdf", text: "emoji" },
+    { emoji: '🫡', link: "https://www.unicode.org/L2/L2019/19396-saluting-face-emoji.pdf", text: "emoji" },
+    { emoji: '🫢', link: "https://www.unicode.org/L2/L2019/19304-face-hands-over-mouth.pdf", text: "emoji" },
+    // { emoji: '🫢', link: "https://www.unicode.org/L2/L2020/20066-breath-face-emoji.pdf", text: "emoji" },
+    { emoji: '🐦‍🔥', link: "https://www.unicode.org/L2/L2020/20130-face-in-clouds-emoji.pdf", text: "emoji" },
+    { emoji: '😶‍🌫️', link: "https://www.unicode.org/L2/L2020/20130-face-in-clouds-emoji.pdf", text: "emoji" },
+    { emoji: '🫣', link: "https://www.unicode.org/L2/L2019/19378-face-with-peeking-eye.pdf", text: "emoji" },
+    { emoji: '🫥', link: "https://www.unicode.org/L2/L2020/20223-dotted-line-face.pdf", text: "emoji" },
+    { emoji: '🫠', link: "https://www.unicode.org/L2/L2020/20072-melting-face-emoji.pdf", text: "emoji" },
+    // { emoji: '😮', link: "#", text: "emoji" },
+    // { emoji: '😶', link: "#", text: "emoji" },
+    { emoji: '😵', link: "https://www.unicode.org/L2/L2019/19303-face-with-x-eyes.pdf", text: "emoji" },
+    // { emoji: '💫', link: "#", text: "emoji" },
+    { emoji: '❤️‍🔥', link: "https://www.unicode.org/L2/L2020/20128-heart-on-fire-emoji.pdf", text: "emoji" },
+    { emoji: '❤️‍🩹', link: "https://www.unicode.org/L2/L2019/19380-mending-heart-emoji.pdf", text: "emoji" },
+    { emoji: '🪷', link: "https://www.unicode.org/L2/L2019/19371-lotus-emoji.pdf", text: "emoji" },
+    { emoji: '🫂', link: "https://www.unicode.org/L2/L2019/19109-two-people-hugging.pdf", text: "emoji" },
+    { emoji: '🫦', link: "https://www.unicode.org/L2/L2019/19219-biting-lip-emoji.pdf", text: "emoji" },
+    { emoji: '🫰', link: "https://www.unicode.org/L2/L2019/19327-thumb-index-crossed.pdf", text: "emoji" },
+    
+    { emoji: '🪫', link: "https://www.unicode.org/L2/L2019/19316-low-battery-.pdf", text: "emoji" },
+    // { emoji: '🫗', link: "#", text: "emoji" }
+  ]
+
+      
+
+  const fillGrid = () => {
+    console.log('fill')
+
+    grid.innerHTML = "";
+
+    const gap = 20;
+    const aspect = 8.5 / 11;
+    const totalItems = emojiLinks.length;
+
+    const maxWidth = window.innerWidth;
+    const maxHeight = window.innerHeight;
+
+    let bestCols = 1;
+    let bestRows = totalItems;
+    let bestCellWidth = 0;
+    let bestLayoutHeight = Infinity;
+
+    for (let cols = 1; cols <= totalItems; cols++) {
+      const rows = Math.ceil(totalItems / cols);
+      const totalGapW = (cols - 1) * gap;
+      const totalGapH = (rows - 1) * gap;
+
+      const cellWidth = (maxWidth - totalGapW) / cols;
+      const cellHeight = cellWidth / aspect;
+      const layoutHeight = cellHeight * rows + totalGapH;
+
+      if (layoutHeight <= maxHeight) {
+        // Choose the layout with the *largest* cells that still fit
+        if (cellWidth > bestCellWidth) {
+          bestCols = cols;
+          bestRows = rows;
+          bestCellWidth = cellWidth;
+          bestLayoutHeight = layoutHeight;
+        }
+      }
+    }
+
+    const cellHeight = bestCellWidth / aspect;
+
+    // Apply layout styles
+    grid.style.gridTemplateColumns = `repeat(${bestCols}, ${bestCellWidth}px)`;
+    grid.style.gridAutoRows = `${cellHeight}px`;
+
+    const gridWidth = bestCols * bestCellWidth + (bestCols - 1) * gap;
+    const gridHeight = bestRows * cellHeight + (bestRows - 1) * gap;
+
+    wrapper.style.width = `${gridWidth}px`;
+    wrapper.style.height = `${gridHeight}px`;
+
+    for (let i = 0; i < emojiLinks.length; i++) {
+      const { emoji, link } = emojiLinks[i];
+      const div = document.createElement("div");
+      div.className = "grid-cell";
+      div.style.animationDelay = `${i * 40}ms`; // Staggered by 40ms per tile
+      div.innerHTML = `<a  class="emojiLink" href="${link}" target="_blank">${emoji}</a><a class="textLink" href="${link}" target="_blank">Unicode Proposal →</a>`;
+      grid.appendChild(div);
+    }
+  }
+
+  const onResizeFillGrid = () => {
+    requestAnimationFrame(fillGrid);
+  }
+
+  const startShowingUnicode = () => {
+    window.addEventListener("resize", onResizeFillGrid);
+    fillGrid()
+  };
+
+
+  const triggerUnicode = document.getElementById('unicode');
+    if(triggerUnicode){
+        triggerUnicode.addEventListener('click', (e) => {
+        clearEverything(e.target, 'unicode')
+        startShowingUnicode()
+        });
+    }
+
+
+  const cleanupUnicode = () => {
+    let nodes = document.getElementsByClassName('grid-cell')
+    window.removeEventListener("resize", onResizeFillGrid);
+
+    for (let i = nodes.length - 1; i >= 0; i--) {
+      nodes[i].remove();
+    }
+  }
 
 
 
-const triggerNoto = document.getElementById('noto');
-
-triggerNoto.addEventListener('click', (e) => { 
-  
-  clearEverything(e.target, 'noto')
-  
-
-  
-
-  
-
-  document.body.addEventListener('mousemove',onMouseMove);
-  
-  showNoto()
-
-}); 
-
-const cleanupNoto = () => {
-  let canvas = document.getElementById('emojiCanvas')
-  let ctx = canvas.getContext('2d')
-  ctx.clearRect(0, 0, canvas.width, canvas.height)
-
-  console.log('cleanup')
-  document.body.className = ''
-  renderedEmojis = []
-  
-  document.body.removeEventListener('mousemove', onMouseMove)
-
-  cancelAnimationFrame(animationFrameId)
-  
-  
-};
+  //////////////////////////////////////////////////////
+  // noto
+  //////////////////////////////////////////////////////
+  const random = () => {
+    if (random.seed) {
+      var x = Math.sin(random.seed++) * 10000;
+      return x - Math.floor(x);
+    }
+    return Math.random();
+  }
 
 
 
+  // Poisson Disk Sampling (Bridson's Algorithm)
+  function poissonDiskSampling(width, height, radius, k = 30) {
+    console.log('disc')
+      const gridSize = radius / Math.sqrt(2);
+      const cols = Math.ceil(width / gridSize);
+      const rows = Math.ceil(height / gridSize);
+      const grid = Array(cols * rows).fill(null);
+      const active = [];
+      const points = [];
 
+      function toGrid(x, y) {
+          return [Math.floor(x / gridSize), Math.floor(y / gridSize)];
+      }
+
+      function inBounds(x, y) {
+          return x >= 0 && y >= 0 && x < width && y < height;
+      }
+
+      function isFarEnough(x, y) {
+          const [gx, gy] = toGrid(x, y);
+          for (let i = -2; i <= 2; i++) {
+              for (let j = -2; j <= 2; j++) {
+                  const nx = gx + i, ny = gy + j;
+                  if (nx >= 0 && ny >= 0 && nx < cols && ny < rows) {
+                      const idx = nx + ny * cols;
+                      const p = grid[idx];
+                      if (p) {
+                          const dx = p.x - x, dy = p.y - y;
+                          if (dx * dx + dy * dy < radius * radius) return false;
+                      }
+                  }
+              }
+          }
+          return true;
+      }
+
+      function addPoint(x, y) {
+          const [gx, gy] = toGrid(x, y);
+          const idx = gx + gy * cols;
+          grid[idx] = { x, y };
+          points.push({ x, y });
+          active.push({ x, y });
+      }
+
+      addPoint(Math.random() * width, Math.random() * height);
+
+      while (active.length > 0) {
+          const randIndex = Math.floor(Math.random() * active.length);
+          const point = active[randIndex];
+          let placed = false;
+
+          for (let i = 0; i < k; i++) {
+              const angle = Math.random() * Math.PI * 2;
+              const r = radius * (1 + Math.random() * 0.5);
+              const newX = point.x + Math.cos(angle) * r;
+              const newY = point.y + Math.sin(angle) * r;
+
+              if (inBounds(newX, newY) && isFarEnough(newX, newY)) {
+                  addPoint(newX, newY);
+                  placed = true;
+                  break;
+              }
+          }
+
+          if (!placed) active.splice(randIndex, 1);
+      }
+
+      return points;
+  }
+
+
+  const sizeCanvas = () => {
+    console.log('sizing')
+    const dpr = window.devicePixelRatio || 1;
+    canvas.width = window.innerWidth * dpr;
+    canvas.height = window.innerHeight * dpr;
+    ctx.scale(dpr, dpr); // Scale drawing to match high-resolution canvas 
+
+    positionEmoji()
+  }
+
+
+  const positionEmoji = () => {
+    const dpr = window.devicePixelRatio || 1;
+    const emojiSize = Math.min(canvas.width, canvas.height) * 0.015; 
+    const radius = emojiSize * 2.5; // Ensure slight spacing
+
+    // Get Poisson Disk points
+    const points = poissonDiskSampling(canvas.width / dpr, canvas.height / dpr, radius);
+
+    // Draw emojis
+    
+    ctx.textBaseline = "middle";
+    ctx.textAlign = "center";
+    ctx.fillStyle = "#A4A7D4";
+
+    let emojiSet = getRandomEmojis(emojis, 3)
+    console.log(emojiSet)
+
+    points.forEach(({ x, y }) => {
+      const emoji = emojiSet[Math.floor(Math.random() * emojiSet.length)];
+      ctx.fillText(emoji, x, y);
+      ctx.font = `200 ${emojiSize}px "Noto Emoji"`;
+
+
+      renderedEmojis.push({
+        x: x,
+        y: y,
+        scale: 1,
+        emoji: emoji
+      })
+    })
+  }
+
+  const showNoto = (e) => {
+    console.log('noto called')
+    renderedEmojis.length = 0;
+
+    ctx.fillStyle = "#000B24"
+    ctx.fillRect(0, 0, canvas.width, canvas.height)
+
+    // Ensure crisp rendering by accounting for devicePixelRatio
+    sizeCanvas()
+
+  }
+
+
+
+  const onMouseMove = (event) => {
+    const canvas = document.getElementById("emojiCanvas");
+    const ctx = canvas.getContext("2d");
+
+
+    const { clientX: mouseX, clientY: mouseY } = event;
+    if (!animationFrameId) {
+        animationFrameId = requestAnimationFrame(() => {
+          ctx.clearRect(0, 0, canvas.width, canvas.height);
+          renderedEmojis.forEach((emoji) => {
+            const centerX = emoji.x + 5;
+            const centerY = emoji.y + 5;
+            const dx = centerX - mouseX;
+            const dy = centerY - mouseY;
+            const distance = Math.sqrt(dx * dx + dy * dy);
+
+            const maxScale = 3.4;
+            const minScale = 1;
+            const falloff = 110;
+            const scale = minScale + (maxScale - minScale) * Math.exp(-distance / falloff);
+
+            emoji.scale = scale;
+            const emojiSize = Math.min(canvas.width, canvas.height) * 0.015;
+
+            ctx.font = `200 ${emojiSize * emoji.scale}px"Noto Emoji"`;
+            ctx.fillText(emoji.emoji, emoji.x, emoji.y);
+          });
+
+          animationFrameId = null; // Reset for the next frame
+      });
+    }
+  }
+
+
+
+  const triggerNoto = document.getElementById('noto');
+    if(triggerNoto){
+       triggerNoto.addEventListener('click', (e) => { 
+        
+        clearEverything(e.target, 'noto')
+        
+        
+
+        
+
+        document.body.addEventListener('mousemove',onMouseMove);
+        
+        showNoto()
+
+      }); 
+    }
+
+
+  const cleanupNoto = () => {
+    let canvas = document.getElementById('emojiCanvas')
+    let ctx = canvas.getContext('2d')
+    ctx.clearRect(0, 0, canvas.width, canvas.height)
+
+    console.log('cleanup')
+    document.body.className = ''
+    renderedEmojis = []
+    
+    document.body.removeEventListener('mousemove', onMouseMove)
+
+    cancelAnimationFrame(animationFrameId)
+    
+    
+  };
+
+  // Initialize event listeners
+  const initEventListeners = () => {
+    const triggerGoogleEmoji = document.getElementById('googleEmoji');
+    const triggerUnicode = document.getElementById('unicode');
+    const triggerNoto = document.getElementById('noto');
+    const triggerEmojiKitchen = document.getElementById('emojiKitchen');
+
+    if (triggerGoogleEmoji) {
+      triggerGoogleEmoji.addEventListener('click', (e) => {
+        clearEverything(e.target, 'google');
+        startShowingGoogle();
+      });
+    }
+
+    if (triggerUnicode) {
+      triggerUnicode.addEventListener('click', (e) => {
+        clearEverything(e.target, 'unicode');
+        startShowingUnicode();
+      });
+    }
+
+    if (triggerNoto) {
+      triggerNoto.addEventListener('click', (e) => {
+        clearEverything(e.target, 'noto');
+        showNoto();
+        document.body.addEventListener('mousemove', onMouseMove);
+      });
+    }
+     if (triggerEmojiKitchen) {
+        triggerEmojiKitchen.addEventListener('click', (e) => {
+            console.log('hiiiiii');
+            clearEverything(e.target, 'emojiKitchen');
+            startShowing();
+        });
+    }
+  };
+
+  // Call initEventListeners when the DOM is loaded
+  initEventListeners();
+});
 </script>
 
 

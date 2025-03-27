@@ -1,10 +1,4 @@
-
-  /*@font-face {
-    font-family: 'Noto Emoji';
-    src: url('https://raw.githubusercontent.com/googlefonts/noto-emoji/main/fonts/NotoEmoji-Regular.ttf') format('truetype');
-  }*/
-
-  html{
+html{
     height: 100%;
     margin:0;
     padding:0;
@@ -12,7 +6,6 @@
   body {  
     font-family: "Lato", sans-serif;
     background-color: #000;
-/*    background-color: #000B24;*/
     color: #f9fafb;
     height: 100%;
     margin:0;
@@ -24,7 +17,6 @@
     padding:0;
     text-align:center;
     display:inline-block;
-    
     white-space: nowrap;
   }
   .container{
@@ -36,14 +28,12 @@
     width: 100vw;
   }
 
-
   @keyframes gentlePopPositive {
     0% {
       transform: scale(0.45) rotate(0deg); 
     }
     100% {
       transform: scale(0.38) rotate(5deg);
-      
     }
   }
   @keyframes gentlePopNegative {
@@ -52,20 +42,13 @@
     }
     100% {
       transform: scale(0.38) rotate(-5deg);
-      
     }
   }
-
-  
-  
-
-
   @keyframes splatAnimation {
     to {
       transform: translateY(-50%) scaleX(2);
     }
   }
-
 
   @keyframes slideUp {
     0% {
@@ -91,13 +74,8 @@
   .sticker{
     position:fixed;
     animation: gentlePopPositive 0.9s ease-out forwards; 
-/*    animation-delay: 1s;*/
     pointer-events:none;
-    z-index:10;
-/*      transform: translateY(-50%) scaleX(0.2);*/
-/*    animation: splatAnimation 0.8s ease-out forwards; /* Apply animation */*/
-
-/*    box-shadow: 0 0 12px rgba(0,0,0,.2);*/
+    z-index: 100; /* Ensure stickers are above most other elements */
   }
 
   .sticker.negative{
@@ -108,43 +86,36 @@
     position:fixed;
     animation: slideUp 8s ease-out; 
     pointer-events:none;
-    z-index:10;
+    z-index: 100; /* Ensure animated emojis are above most other elements */
   }
 
-  
   #emojiCanvas{
     width:100%;
     height:100%;
     position:fixed;
     pointer-events: none;
-    z-index:-1;
+    /* z-index: -1;  Removing this should be fine, body is the first element */
     left:0;
     bottom:0;
     right:0;
     top:0;
-/*    display:none;*/
   }
 
 .header {
   transition: transform 0.3s ease;
   cursor: pointer;
-/*  font-size: 16px;*/
-/*  padding: 8px 16px;*/
-/*  border: 1px solid #ccc;*/
-/*  border-radius: 4px;*/
 }
 
 .link:hover {
-/*  transform: scale(1.15); /* Scale up on hover */*/
   z-index: 1000; /* Ensure hovered link is on top */
 }
 
 .link-container .sections{
-  z-index:10000;
+  z-index: 100; /* Give this a high value to be above the grid */
 }
 
 .link-container{
- z-index:10000; 
+ z-index: 100; 
 }
 
 .sections{
@@ -155,20 +126,11 @@
   font-family: "Dynapuff", sans-serif;
 }
 
-/* Logic for scaling based on distance */
-/*.link{
-   transform-origin: left;
-}
-*/
 .link-container .link:hover,.link-container .link.active {
-  transform: scale(1.5); /* Scale up hovered link */
-  z-index:1000;
+  transform: scale(1.5);
+  z-index: 1000;
 }
 
-/*#noto.active{
-  color:#6674C0 !important;
-}
-*/
 .emojiToggle{
   font-family: "Noto Emoji";
   font-size: 50px;
@@ -184,15 +146,6 @@
   color:#000;
 }
 
-/*#emojiKitchen.active{
-  color:#FF00FF;  
-}
-
-#googleEmoji.active{
-  color:#F94AAB;
-}*/
-
-
 .active{
   color:#F94AAB;
 }
@@ -204,18 +157,11 @@
   border-radius: 50px;
   position: absolute;
   bottom:-500px;
-  /*display:flex;
-  flex-direction: column; 
-  z-index:100000;*/
 }
 
 .toggles{
-/*  display:none;*/
 }
 
-/*.link-container{
-  margin-top:-60px;
-}*/
 #emojiCanvas{
   font-variant-emoji: text;
 }
@@ -223,23 +169,13 @@
   position:absolute;
   font-size: 28px;
   font-family: "Noto Emoji", sans-serif;
-/*  animation: gentlePopNegative 0.8s ease-out forwards;*/
   font-weight: 100;
   display:inline-block;
-/*  transition: font-size .5s;*/
   color:#A4A7D4;
-/*   transform-origin: -50% 50%;*/
   z-index:-1;
-  /*transition: transform 0.2s ease-out;
-            transform-origin: center;*/
 }
 
 .emojiCharacter:hover{
-/*  font-size: 100px;*/
-  
-/*  color:#f00;*/
-/*  cursor: default;*/
-/*  transform: scale(2); */
 }
 
 .notoBG{
@@ -266,23 +202,17 @@
       top: 50%;
       left: 50%;
       transform: translate(-50%, -50%);
-/*      pointer-events: none;*/
-/*      z-index: -1;*/
+      z-index: 50; /* Give the grid a z-index, lower than the fixed elements */
     }
 
 
   .background-grid {
       display: grid;
       gap: 20px;
-/*      pointer-events: none;*/
     }
 
-
-
-
-
- .grid-cell {
-    background-color: #f0f8ff; /* Light blue background */
+  .grid-cell {
+    background-color: #f0f8ff;
       background: rgba(255, 255, 255, 0.05);
       display: flex;
       align-items: center;
@@ -296,6 +226,7 @@
     transition: transform 0.2s ease-out;
     flex-direction: column;
     position:relative;
+    z-index: 1; /*Make sure grid cells are above the grid wrapper*/
     }
 
    .grid-cell a.emojiLink {
@@ -344,17 +275,13 @@
     }
   }
 
-  /*.grid-cell a:hover {
-    transform: scale(3);
-  }*/
-
-    
 nav{
   position:fixed;
   top:0;
   left:0;
   right:0;
   padding:16px;
+  z-index: 200; /* Sit on top of everything */
 }
 
 nav ul{
@@ -365,7 +292,6 @@ nav ul{
 }
 
 nav li{
-/*  display:flex;*/
   padding:16px;
 }
 
