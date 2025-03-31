@@ -382,9 +382,9 @@ nav a.active, nav a:hover{
     padding:0;
   
   }
-  .modal-visible .sections{
+  /*.modal-visible .sections{
     display:none;
-  }
+  }*/
   .grid-cell a.textLink{
     display:none;
   }
@@ -461,12 +461,4 @@ nav a.active, nav a:hover{
 
 .info-active{
   display:block;
-}
-
-.googleColorEmoji{
-  position:fixed;
-  animation: slideDown 8s ease-out; 
-  pointer-events:none;
-  z-index: 100; /* Ensure animated emojis are above most other elements */ 
-  font-size:40px;
 }

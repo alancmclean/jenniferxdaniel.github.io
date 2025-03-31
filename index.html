@@ -344,7 +344,6 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Calculate the computed pixel value
     const pixelFontSize = remNumber * rootFontSizePixels;
-
     return pixelFontSize;
   }
 
@@ -369,8 +368,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Extruded layers
     for (let i = depth; i >= 1; i--) {
-        ctx.fillStyle = `rgb(${255 - i*4}, ${100 + i*3}, ${200})`;
-        ctx.fillText(text, x + (offsetX * i / depth), y + (offsetY * i / depth));
+      ctx.fillStyle = `rgb(${255 - i*4}, ${100 + i*3}, ${200})`;
+      ctx.fillText(text, x + (offsetX * i / depth), y + (offsetY * i / depth));
     }
 
     // Original fixed text
@@ -380,12 +379,12 @@ document.addEventListener('DOMContentLoaded', function() {
 
   function animateText() {
     const anchor = document.getElementById('fontText')
-    const textPosition = anchor.getBoundingClientRect()
+    const textRect = anchor.getBoundingClientRect()
     
 
     angle += 0.005;
-    const fixedX = (canvas.width / 4);
-    const fixedY = textPosition.top + textPosition.height/2;
+    const fixedX = textRect.left + textRect.width / 2;;
+    const fixedY = textRect.top + textRect.height / 2;
 
     let progress = (Math.sin(angle) + 1) / 2; // value from 0 to 1
     let easedProgress = easeOutQuad(progress);
