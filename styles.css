@@ -5,14 +5,15 @@ html{
   }
   body {  
     font-family: "Lato", sans-serif;
-    background-color: #000;
+    background-color: #070A0D;
     color: #f9fafb;
     height: 100%;
     margin:0;
     padding:0;
   }
   h3 {
-    font-size:4rem;
+/*    font-size:4vw;*/
+    font-size: clamp(2.5rem, 4.6vw, 4.6rem);
     margin:0;
     padding:0;
     text-align:center;
@@ -25,7 +26,7 @@ html{
     align-items: center;
     flex-direction: column;
     height: 100vh;
-    width: 100vw;
+/*    width: 100vw;*/
   }
 
   @keyframes gentlePopPositive {
@@ -62,6 +63,19 @@ html{
     }
   }
 
+
+@keyframes slideDown {
+    0% {
+      transform: translate(0, 0) scale(.5); 
+    },  
+    20% {
+       transform: translate(0, 12vh) scale(.8); 
+    }
+    100% {
+      transform: translate(0, 130vh) scale(.8); 
+    }
+  }
+
   @keyframes grow {
     0% {
       transform: scale(0); 
@@ -76,6 +90,7 @@ html{
     animation: gentlePopPositive 0.9s ease-out forwards; 
     pointer-events:none;
     z-index: 100; /* Ensure stickers are above most other elements */
+    filter: drop-shadow(0px 2px 12px rgba(0,0,0,0.2));
   }
 
   .sticker.negative{
@@ -87,6 +102,7 @@ html{
     animation: slideUp 8s ease-out; 
     pointer-events:none;
     z-index: 100; /* Ensure animated emojis are above most other elements */
+/*    filter: drop-shadow(0px 2px 12px rgba(0,0,0,0.2));*/
   }
 
   #emojiCanvas{
@@ -102,32 +118,44 @@ html{
   }
 
 .header {
-  transition: transform 0.3s ease;
+/*  transition: transform 0.3s ease;*/
   cursor: pointer;
+  text-shadow: 0 0 20px 3px rgba(255,0,0,.75);
+  transition: all 750ms cubic-bezier(.47,1.64,.41,.8);
 }
 
 .link:hover {
   z-index: 1000; /* Ensure hovered link is on top */
 }
 
+.link:hover  a{
+  color:#F94AAB;
+/*  background:D71481;*/
+  color: transparent;
+  background: linear-gradient(0deg, #F90F92, 55%, #FF74C1);
+  background-clip: text;
+}
+
+
 .link-container .sections{
   z-index: 100; /* Give this a high value to be above the grid */
 }
 
 .link-container{
- z-index: 100; 
+ z-index: 1000; 
 }
 
 .sections{
   list-style-type:none;
+  padding:0;
 }
 
 .link-container h3{
   font-family: "Dynapuff", sans-serif;
 }
 
-.link-container .link:hover,.link-container .link.active {
-  transform: scale(1.5);
+.link-container .link:hover{
+  transform: scale(1.35);
   z-index: 1000;
 }
 
@@ -146,17 +174,21 @@ html{
   color:#000;
 }
 
-.active{
-  color:#F94AAB;
+.link a{
+  color:#fff;
+  text-decoration: none;
 }
+
+
+
 
 .controls{
   background:rgba(0,0,0,.9);
   max-width:400px;
   padding:24px 48px;
   border-radius: 50px;
-  position: absolute;
-  bottom:-500px;
+  position: fixed;
+  bottom:-1000px;
 }
 
 .toggles{
@@ -192,6 +224,8 @@ html{
 
 .section{
   text-align:center;
+  margin:0;
+  padding:0;
 }
 
 .active .subsection{
@@ -251,12 +285,12 @@ html{
       border-radius:20px;
       transition: opacity .5s, bottom .7s, transform .7s;
       opacity: 0;
-      transform: scale(.7);
+      transform: scale(.5);
     }
 
     .grid-cell:hover a.textLink{
       opacity: 1;
-      bottom: 20%;
+      bottom: 10%;
       transform: scale(1);
     }
     .grid-cell:hover a.emojiLink{
@@ -311,4 +345,128 @@ nav a{
 nav a.active, nav a:hover{
   text-decoration:underline;
   text-underline-offset: 6px;
+}
+
+.modal{
+  padding:32px;
+  background:#fff;
+  color:#fff;
+  box-shadow:0 0 20px rgba(9,12,17,.5);
+  max-width:440px;
+  display:flex;
+  flex-direction: column; 
+  border-radius:32px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 1000;
+  display:none;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+
+@media only screen and (max-width: 767px) and (orientation: portrait),
+       only screen and (max-width: 767px) and (orientation: landscape) {
+  .modal { /* Replace .your-element with the actual class or ID */
+/*    width: 100%;*/
+    left:0;
+    right:0;
+    bottom:0;
+    transform:none;
+    border-radius:16px 16px 0 0;
+  }
+  nav{
+  
+    padding:0;
+  
+  }
+  .modal-visible .sections{
+    display:none;
+  }
+  .grid-cell a.textLink{
+    display:none;
+  }
+}
+
+
+.modal h4{
+  font-size:36px;
+  margin: 0 0 4px;
+  padding:0;
+  font-family: "Dynapuff", sans-serif;
+  letter-spacing: 2px;  
+  
+  /*color: transparent;
+  background: linear-gradient(to bottom, #FFF1D2, #F2CE80);
+  background-clip: text;*/
+  color:#333;
+}
+
+.modal p{
+  line-height:160%;
+  color:rgba(0,0,0,.87);
+}
+
+.modal.is-visible{
+  display:block;
+}
+
+.modal a{
+  text-decoration: none;
+  color:#FA1093;
+}
+
+.modal a:hover{
+  text-decoration: underline;
+}
+
+.close{
+  width: 40px;
+  height: 40px;
+  background:rgba(0,0,0,.05);
+  color:#000;
+  border-radius:20px;
+  position:absolute;
+  right:12px;
+  top:12px;
+/*  vertical-align: center;*/
+  text-align: center;
+  display: flex;
+  cursor:pointer;
+  align-items: center;
+  justify-content: center;
+  font-weight:bold;
+}
+
+.scrim{
+/*  background:rgba(0,244,0,.1);*/
+  position:absolute;
+  left:0;
+  right:0;
+  bottom:0;
+  top:0;
+  z-index:500;
+  display:none;
+}
+
+.scrim.is-visible{
+   display:block; 
+}
+
+.info{
+  display:none;
+}
+
+.info-active{
+  display:block;
+}
+
+.googleColorEmoji{
+  position:fixed;
+  animation: slideDown 8s ease-out; 
+  pointer-events:none;
+  z-index: 100; /* Ensure animated emojis are above most other elements */ 
+  font-size:40px;
 }
