@@ -200,8 +200,8 @@ document.addEventListener('DOMContentLoaded', function() {
     
   }
 
-    const clearEverything = (target=null, newState) => {
-    if(activeState === null || activeState != newState){
+    const clearEverything = (target=null, newState=null) => {
+    if(activeState === null || activeState != newState || newState === null){
       cleanupGoogle()
       cleanupUnicode()
       cleanupFonts()
@@ -231,7 +231,7 @@ document.addEventListener('DOMContentLoaded', function() {
     if(activeLinks.length > 0){
       activeLinks[0].classList.remove('activeLink')
     }
-
+    clearEverything()
   }
   document.getElementById('scrim').addEventListener('click', hideModal)  
   document.getElementById('close').addEventListener('click', hideModal)  
@@ -836,6 +836,7 @@ const fillGrid = () => {
 
 
   const cleanupNoto = () => {
+    console.log('hide noto')
     let canvas = document.getElementById('emojiCanvas')
     let ctx = canvas.getContext('2d')
     ctx.clearRect(0, 0, canvas.width, canvas.height)
