@@ -31,10 +31,7 @@
   </div>
 
   <ul class="sections link-container">
-    <li class="section">
-      <h3 id="fonts" class="header link">
-        <a class="has-info" data-key="fonts" id="fontText" href="https://fonts.google.com/noto/specimen/Noto+Color+Emoji" target="_blank">Fonts</h3>
-    </li>
+    
     <li class="section">
       <h3 id="unicode" class="header link">
         <a class="has-info" data-key="unicode" href="https://www.technologyreview.com/2021/05/11/1024802/jennifer-daniel-unicode-the-woman-who-will-decide-emoji/" target="_blank">Unicode</h3>
@@ -46,15 +43,20 @@
     </h3>
     </li>
     <li class="section">
-      <h3 class="header link" id="noto">
-        <a href="https://www.youtube.com/watch?v=l97ysAtXmDU" target="_blank">Emoji Wallpapers</a>
-      </h3>
-    </li>
-    <li class="section">
       <h3 class="header link" id="googleEmoji">
         <a href="https://googlefonts.github.io/noto-emoji-animation/" target="_blank">Animated Emoji</a>
       </h3>
     </li>
+    <li class="section">
+      <h3 class="header link" id="noto">
+        <a class="has-info" data-key="wallpapers" href="https://www.youtube.com/watch?v=l97ysAtXmDU" target="_blank">Emoji Wallpapers</a>
+      </h3>
+    </li>
+    <li class="section">
+      <h3 id="fonts" class="header link">
+        <a class="has-info" data-key="fonts" id="fontText" href="https://fonts.google.com/noto/specimen/Noto+Color+Emoji" target="_blank">Dynapuff</h3>
+    </li>
+    
     <li class="section">
       <h3 class="header link" id="lectures">
         <a class="has-info" data-key="lectures" href="https://creativemornings.com/talks/jennifer-daniel" target="_blank">
@@ -117,8 +119,15 @@ Beyond Gboard and Google Search, several third-party applications have emerged, 
       <p>For up-to-date information about upcoming speaking events, sign up to <a href="https://jenniferdaniel.substack.com" target="_blank">my newsletter</a> and follow me on <a href="https://www.x.com/jenniferdaniel" target="_blank">twitter</a> and <a href="https://www.instagram.com/jenniferxdaniel" target="_blank">instagram</a>.
       </p>  
     </div>
+
+    <div class="info" id="wallpapers-info">
+      <h4>Emoji Wallpapers</h4>
+      <iframe width="560" height="315" src="https://www.youtube.com/embed/l97ysAtXmDU?si=j-iS5LoBru780tBV" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      </p>  
+    </div>
     
   </div>
+
 
   <div class="controls">
     <h4>Noto Emoji</h4>
@@ -217,6 +226,12 @@ document.addEventListener('DOMContentLoaded', function() {
     document.getElementById('modal').classList.remove('is-visible');
     cleanupUnicode()
     document.body.classList.remove('modal-visible');
+
+    const activeLinks = document.getElementsByClassName('activeLink')
+    if(activeLinks.length > 0){
+      activeLinks[0].classList.remove('activeLink')
+    }
+
   }
   document.getElementById('scrim').addEventListener('click', hideModal)  
   document.getElementById('close').addEventListener('click', hideModal)  
@@ -403,11 +418,11 @@ document.addEventListener('DOMContentLoaded', function() {
 
   const resetLinks = (target, newActiveState) => {
     console.log(target)
-    let activeLink = document.getElementsByClassName('active')[0]
+    let activeLink = document.getElementsByClassName('activeLink')[0]
     if(activeLink){
-      activeLink.classList.remove('active')
+      activeLink.classList.remove('activeLink')
     }
-    target.classList.add('active')
+    target.classList.add('activeLink')
     activeState = newActiveState
   }
 
@@ -846,25 +861,27 @@ const fillGrid = () => {
     const lectures = document.getElementById('lectures');
 
     if (fonts) {
-      fonts.addEventListener('mouseenter', (e) => {
-
+      fonts.addEventListener('click', (e) => {
+        e.preventDefault()
         clearEverything(null, 'fonts');
-        startShowingFonts();
-        // showModal('animated')
-      });
-      fonts.addEventListener('mouseleave', (e) => {
-
-        clearEverything(null, 'fonts');
+        resetLinks(e.target)
         // startShowingFonts();
         // showModal('animated')
       });
+      // fonts.addEventListener('mouseleave', (e) => {
+
+      //   clearEverything(null, 'fonts');
+      //   // startShowingFonts();
+      //   // showModal('animated')
+      // });
 
     }
 
     if (lectures) {
-      lectures.addEventListener('mouseenter', (e) => {
-
+      lectures.addEventListener('click', (e) => {
+        e.preventDefault()
         clearEverything(null, 'lectures');
+        resetLinks(e.target)
         // startShowingGoogle();
         // showModal('animated')
       });
@@ -873,60 +890,67 @@ const fillGrid = () => {
 
 
     if (triggerGoogleEmoji) {
-      triggerGoogleEmoji.addEventListener('mouseenter', (e) => {
-
+      triggerGoogleEmoji.addEventListener('click', (e) => {
+        e.preventDefault()
         clearEverything(e.target, 'google');
         startShowingGoogle();
+        resetLinks(e.target)
         // showModal('animated')
       });
-      triggerNoto.addEventListener('mouseleave', (e) => {
-            console.log('leaving google');
-            clearEverything(null, 'google');
-            // startShowing();
-            // showModal('ek')
-        });
+      // triggerNoto.addEventListener('mouseleave', (e) => {
+      //       console.log('leaving google');
+      //       clearEverything(null, 'google');
+      //       // startShowing();
+      //       // showModal('ek')
+      //   });
     }
 
     if (triggerUnicode) {
-      triggerUnicode.addEventListener('mouseenter', (e) => {
+      triggerUnicode.addEventListener('click', (e) => {
+        e.preventDefault()
         clearEverything(e.target, 'unicode');
         startShowingUnicode();
+        resetLinks(e.target)
         // showModal('unicode')
       });
-      triggerNoto.addEventListener('mouseleave', (e) => {
-            console.log('leaving unicode');
-            clearEverything(null, 'unicode');
-            // startShowing();
-            // showModal('ek')
-        });
+      // triggerNoto.addEventListener('mouseleave', (e) => {
+      //       console.log('leaving unicode');
+      //       clearEverything(null, 'unicode');
+      //       // startShowing();
+      //       // showModal('ek')
+      //   });
     }
 
     if (triggerNoto) {
-      triggerNoto.addEventListener('mouseenter', (e) => {
+      triggerNoto.addEventListener('click', (e) => {
+        e.preventDefault()
         clearEverything(e.target, 'noto');
         showNoto();
         document.body.addEventListener('mousemove', onMouseMove);
+        resetLinks(e.target)
       });
-      triggerNoto.addEventListener('mouseleave', (e) => {
-            console.log('leaving noto');
-            clearEverything(null, 'noto');
-            // startShowing();
-            // showModal('ek')
-        });
+      // triggerNoto.addEventListener('mouseleave', (e) => {
+      //       console.log('leaving noto');
+      //       clearEverything(null, 'noto');
+      //       // startShowing();
+      //       // showModal('ek')
+      //   });
     }
      if (triggerEmojiKitchen) {
-        triggerEmojiKitchen.addEventListener('mouseenter', (e) => {
+        triggerEmojiKitchen.addEventListener('click', (e) => {
             console.log('hiiiiii');
+            e.preventDefault()
             clearEverything(e.target, 'emojiKitchen');
             startShowing();
+            resetLinks(e.target)
             // showModal('ek')
         });
-        triggerEmojiKitchen.addEventListener('mouseleave', (e) => {
-            console.log('leaving ek');;
-            clearEverything(null, 'emojiKitchen');
-            // startShowing();
-            // showModal('ek')
-        });
+        // triggerEmojiKitchen.addEventListener('mouseleave', (e) => {
+        //     console.log('leaving ek');;
+        //     clearEverything(null, 'emojiKitchen');
+        //     // startShowing();
+        //     // showModal('ek')
+        // });
     }
 
     const elementsWithInfo = document.getElementsByClassName('has-info')

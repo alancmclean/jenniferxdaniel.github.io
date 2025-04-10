@@ -128,7 +128,7 @@ html{
   z-index: 1000; /* Ensure hovered link is on top */
 }
 
-.link:hover  a{
+.link:hover  a, .link a.activeLink  {
   color:#F94AAB;
 /*  background:D71481;*/
   color: transparent;
@@ -365,6 +365,18 @@ nav a.active, nav a:hover{
   display:none;
   overflow-y: scroll;
   overflow-x: hidden;
+}
+
+/*.container {
+    display: flex;
+    justify-content: center;
+}
+   */ 
+.modal iframe {
+  aspect-ratio: 16 / 9;
+  width: 100% !important;
+  border-radius:16px;
+  margin-top:24px;
 }
 
 
