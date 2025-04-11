@@ -14,7 +14,7 @@ html{
   }
   h3 {
 /*    font-size:4vw;*/
-    font-size: clamp(2.5rem, 4.6vw, 4.6rem);
+    
     margin:0;
     padding:0;
     text-align:center;
@@ -193,6 +193,8 @@ html{
   text-decoration: none;
   background: linear-gradient(0deg, #fff, 55%, #d00);
   background-clip: text;
+  letter-spacing:.2vw;
+  font-size: clamp(2.2rem, 4.6vw, 4.6rem);
 }
 
 
@@ -456,7 +458,7 @@ nav a.active, nav a:hover{
   width: 40px;
   height: 40px;
   background:rgba(0,0,0,.05);
-  color:#000;
+/*  color:#000;*/
   border-radius:20px;
   position:absolute;
   right:12px;
@@ -468,6 +470,10 @@ nav a.active, nav a:hover{
   align-items: center;
   justify-content: center;
   font-weight:bold;
+}
+
+.close img{
+  opacity:.5;
 }
 
 .scrim{
