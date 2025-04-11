@@ -10,6 +10,7 @@ html{
     height: 100%;
     margin:0;
     padding:0;
+    overflow-x: hidden;
   }
   h3 {
 /*    font-size:4vw;*/
@@ -86,6 +87,7 @@ html{
   }
 
   .sticker{
+    margin-left:-25%;
     position:fixed;
     animation: gentlePopPositive 0.9s ease-out forwards; 
     pointer-events:none;
@@ -103,6 +105,7 @@ html{
     pointer-events:none;
     z-index: 100; /* Ensure animated emojis are above most other elements */
 /*    filter: drop-shadow(0px 2px 12px rgba(0,0,0,0.2));*/
+    margin-left:-25%;
   }
 
   #emojiCanvas{
@@ -124,9 +127,20 @@ html{
   transition: all 750ms cubic-bezier(.47,1.64,.41,.8);
 }
 
+.link-container{
+  transition: all 750ms cubic-bezier(.47,1.64,.41,.8);
+}
+
+.link-container.hidden{
+/*  transform: scale(.2);*/
+  opacity:0;
+  pointer-events: none;
+}
+
 .link:hover {
   z-index: 1000; /* Ensure hovered link is on top */
 }
+
 
 .link:hover  a, .link a.activeLink  {
   color:#F94AAB;
@@ -177,6 +191,8 @@ html{
 .link a{
   color:#fff;
   text-decoration: none;
+  background: linear-gradient(0deg, #fff, 55%, #d00);
+  background-clip: text;
 }
 
 
@@ -316,6 +332,7 @@ nav{
   right:0;
   padding:16px;
   z-index: 200; /* Sit on top of everything */
+  background:#070A0D;
 }
 
 nav ul{
@@ -382,8 +399,8 @@ nav a.active, nav a:hover{
 
 @media only screen and (max-width: 767px) and (orientation: portrait),
        only screen and (max-width: 767px) and (orientation: landscape) {
-  .modal { /* Replace .your-element with the actual class or ID */
-/*    width: 100%;*/
+  .modal { 
+
     left:0;
     right:0;
     bottom:0;
@@ -475,3 +492,40 @@ nav a.active, nav a:hover{
 .info-active{
   display:block;
 }
+
+
+#dynapuffHolder{
+
+  position: fixed;
+  left:-50px;
+  right:-50px;
+  bottom:-50px;
+  top:-50px;
+/*  display:none;*/
+  text-align: center;
+}
+
+.letter {
+  font-family: "Dynapuff", sans-serif;
+  font-size:12vw;
+  letter-spacing:.5vw;
+  padding:1vw;
+  color:#fff;
+  opacity: 0;
+  transition: opacity 1s ease-in-out;
+  display: inline-block;
+/*  animation: fadeLetterIn .7s forwards; /* Changed to animation */*/
+  animation-delay: calc(var(--index) * 0.2s); /* Simplified delay */
+}
+
+.showLetter{
+  animation: fadeLetterIn .7s forwards; /* Changed to animation */
+  animation-play-state:running;
+}
+
+/* Keyframes for the fade-in animation */
+@keyframes fadeLetterIn {
+  from { opacity: 0; }
+  to { opacity: 1; }
+}
+

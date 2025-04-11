@@ -30,7 +30,7 @@
     <div class="background-grid" id="backgroundGrid"></div>
   </div>
 
-  <ul class="sections link-container">
+  <ul class="sections link-container" id="links">
     
     <li class="section">
       <h3 id="unicode" class="header link">
@@ -98,12 +98,10 @@ Beyond Gboard and Google Search, several third-party applications have emerged, 
     </div>
 
     <div class="info" id="fonts-info">
-      <h4>Fonts</h4>
-      <p>I've designed several notable fonts, including <a href="https://fonts.google.com/specimen/DynaPuff" target="_blank">Dynapuff</a>, known for its playful and dynamic style, and Google's monochrome emoji font, <a href="https://fonts.google.com/noto/specimen/Noto+Emoji" target="_blank">Noto Emoji</a>, created to offer clear, expressive visuals even without color. </p>
+      <h4>Dynapuff</h4>
+      <p>DynaPuff is a playful and blobby display variable font I designed with Toshi Omagari. based on the hand-drawn typographic stickers I made for Gboard. Its hand-drawn charm and bouncy baseline give it a fun, energetic feel, perfect for sticker art, children's books, and casual designs.</p> 
+      <p>You may recognize it from TikTok, Capcut, and Instagram (until 2024). The font is a variable typeface with character-alternates that create a more natural, less robotic look for repeated letters so you can OOOoooOOo and aAAAAaaeeWWWee at it’s typographic tone of voice. </p>
 
-        <p>Additionally, I led the design of the comprehensive <a href="https://fonts.google.com/noto/specimen/Noto+Color+Emoji" target="_blank">Google Color Emoji</a> font, which is now shipped across all Google products and services, making emoji communication vibrant, inclusive, and accessible to billions of users worldwide. My work consistently aims to blend functionality with expressive visual language.
-
-      </p>  
     </div>
 
     <div class="info" id="animated-info">
@@ -156,13 +154,47 @@ Beyond Gboard and Google Search, several third-party applications have emerged, 
       <div class="emojiToggle" data-emoji="😻">😻</div>
       <div class="emojiToggle" data-emoji="🌟">🌟</div>
           <div class="emojiToggle" data-emoji="🍄">🍄</div>
-      
-
-
-      
     </div>
   </div>
   
+  <div id="dynapuffHolder">
+     <span class="letter">wow</span>
+     <span class="letter">thank you</span>
+     <span class="letter">yum</span>
+     <span class="letter">cool</span>
+     <span class="letter">meow!</span>
+     <span class="letter">i love you</span>
+     <span class="letter">kiss</span>
+     <span class="letter">cute</span>
+     <span class="letter">cya</span>
+     <span class="letter">omw</span>
+     <span class="letter">lol</span>
+     <span class="letter">hi</span>
+     <span class="letter">im crying</span>
+     <span class="letter">miss you</span>
+     <span class="letter">hugs</span>
+     <span class="letter">lmao</span>
+     <span class="letter">nice!</span>
+     <span class="letter">nope</span>
+     <span class="letter">omg</span>
+     <span class="letter">pls</span>
+
+     <span class="letter">oof</span>
+
+     <span class="letter">awwww</span>
+     <span class="letter">duh</span>
+     <span class="letter">idk</span>
+     <span class="letter">yikes!</span>
+     <span class="letter">no way</span>
+
+     <span class="letter">huh</span>
+     <span class="letter">oh no</span>
+     <span class="letter">sigh</span>
+     <span class="letter">hmmmm</span>
+
+     <span class="letter">ola</span>
+  </div>
+
 </main>
 
 <script type="text/javascript">
@@ -194,6 +226,8 @@ document.addEventListener('DOMContentLoaded', function() {
     if(name != 'unicode'){
       document.getElementById('scrim').classList.add('is-visible')    
     }
+
+    document.getElementById('links').classList.add('hidden');
     
     document.getElementById('modal').classList.add('is-visible')  
     document.body.classList.add('modal-visible');
@@ -207,13 +241,27 @@ document.addEventListener('DOMContentLoaded', function() {
       cleanupFonts()
       cleanup()
       cleanupNoto()
-      
+      cleanupWords()
     }
     if(target != null){
       activeState = newState;
     }
     
   }
+
+  const cleanupWords = () => {
+    const spans = document.querySelectorAll('.letter');
+    spans.forEach(span => {
+      span.classList.remove('showLetter')
+    });  
+  }
+  const showWords = () => {
+    const spans = document.querySelectorAll('.letter');
+    spans.forEach(span => {
+      span.classList.add('showLetter')
+    });  
+  }
+  
 
 
   const hideModal = (name) => {
@@ -232,6 +280,7 @@ document.addEventListener('DOMContentLoaded', function() {
       activeLinks[0].classList.remove('activeLink')
     }
     clearEverything()
+    document.getElementById('links').classList.remove('hidden');
   }
   document.getElementById('scrim').addEventListener('click', hideModal)  
   document.getElementById('close').addEventListener('click', hideModal)  
@@ -868,14 +917,8 @@ const fillGrid = () => {
         resetLinks(e.target)
         // startShowingFonts();
         // showModal('animated')
+        showWords()
       });
-      // fonts.addEventListener('mouseleave', (e) => {
-
-      //   clearEverything(null, 'fonts');
-      //   // startShowingFonts();
-      //   // showModal('animated')
-      // });
-
     }
 
     if (lectures) {
