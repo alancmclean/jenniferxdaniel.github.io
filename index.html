@@ -11,7 +11,7 @@
 <link href="https://fonts.googleapis.com/css2?family=DynaPuff:wdth,wght@75..100,400..700&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&family=Noto+Emoji:wght@300..700&display=swap" rel="stylesheet">
 
 <link rel="stylesheet" type="text/css" href="styles.css">
-
+<script src="https://www.youtube.com/iframe_api"></script>
 
 </style>
 </head>
@@ -120,7 +120,7 @@ Beyond Gboard and Google Search, several third-party applications have emerged, 
 
     <div class="info" id="wallpapers-info">
       <h4>Emoji Wallpapers</h4>
-      <iframe width="560" height="315" src="https://www.youtube.com/embed/l97ysAtXmDU?si=j-iS5LoBru780tBV" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+      <iframe width="560" height="315" id="myPlayer" src="https://www.youtube.com/embed/l97ysAtXmDU?si=j-iS5LoBru780tBV&enablejsapi=1" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
       </p>  
     </div>
     
@@ -213,6 +213,7 @@ document.addEventListener('DOMContentLoaded', function() {
   let activeState = null
   let startTimestamp;
   let animationFrameId;
+  // let player;
 
   const showModal = (name) => {
     const infoBoxes = document.getElementsByClassName('info')
@@ -898,6 +899,14 @@ const fillGrid = () => {
 
     cancelAnimationFrame(animationFrameId)
     
+    try{
+      // let player = new YT.Player('myPlayer');
+      player.stopVideo();
+      console.log('player stopped')
+    }catch(err){
+      console.log('no player')
+    }
+    
     
   };
 
@@ -1008,11 +1017,22 @@ const fillGrid = () => {
       })
     }
 
+    
+
   };
+
+
 
   // Call initEventListeners when the DOM is loaded
   initEventListeners();
 });
+    
+player = null
+function onYouTubeIframeAPIReady() {
+  player = new YT.Player('myPlayer');
+  console.log('its ready: ', player)
+}
+    // onYouTubeIframeAPIReady()
 </script>
 
 
