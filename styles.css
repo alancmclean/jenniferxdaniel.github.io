@@ -87,7 +87,7 @@ html{
   }
 
   .sticker{
-    margin-left:-25%;
+    
     position:fixed;
     animation: gentlePopPositive 0.9s ease-out forwards; 
     pointer-events:none;
@@ -194,7 +194,7 @@ html{
   background: linear-gradient(0deg, #fff, 55%, #d00);
   background-clip: text;
   letter-spacing:.2vw;
-  font-size: clamp(2.2rem, 4.6vw, 4.6rem);
+  font-size: clamp(2.3rem, 4.6vw, 4.6rem);
 }
 
 
@@ -334,7 +334,7 @@ nav{
   right:0;
   padding:16px;
   z-index: 200; /* Sit on top of everything */
-  background:#070A0D;
+/*  background:#070A0D;*/
 }
 
 nav ul{
