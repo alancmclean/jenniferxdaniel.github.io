@@ -373,6 +373,7 @@ nav a.active, nav a:hover{
   color:#fff;
   box-shadow:0 0 20px rgba(9,12,17,.5);
   max-width:440px;
+  max-height:50%;
   display:flex;
   flex-direction: column; 
   border-radius:32px;
