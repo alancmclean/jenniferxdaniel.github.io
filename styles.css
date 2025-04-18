@@ -270,7 +270,7 @@ html{
       align-items: center;
       justify-content: center;
       font-size: 2rem;
-      border-radius: 16px;
+      border-radius: 12px;
       aspect-ratio: 8.5 / 11;
       animation: fadeIn 0.4s ease-out forwards;
        transform: scale(0.95);
@@ -279,6 +279,21 @@ html{
     flex-direction: column;
     position:relative;
     z-index: 1; /*Make sure grid cells are above the grid wrapper*/
+
+    }
+
+    .grid-cell::before{
+    content: ' ';
+    position: absolute;
+    top: 20px;
+    right: 0;
+    border-bottom: 20px solid rgba(255, 255, 255, 0.15);
+    border-left: 20px solid #090a0b;
+    width: 0;
+    box-shadow: -2px 2px 3px rgba(0, 0, 0, .2);
+    transform-origin: top right;
+    transform: rotate(90deg);
+    border-radius: 0 0 5px 0;
     }
 
    .grid-cell a.emojiLink {
@@ -287,6 +302,7 @@ html{
       pointer-events: auto;
       transition: transform .8s cubic-bezier(0.175, 0.885, 0.320, 1.275);
       z-index: 1;
+      font-size:5vw;
       text-decoration: none !important;
     }
 
@@ -299,7 +315,7 @@ html{
       text-decoration: none;
       position: absolute;
       bottom: 10%;
-      background:rgba(255,255,255,.1);
+      background:rgba(255,255,255,.05);
       border-radius:20px;
       transition: opacity .5s, bottom .7s, transform .7s;
       opacity: 0;
