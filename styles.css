@@ -26,8 +26,9 @@ html{
     justify-content: center;
     align-items: center;
     flex-direction: column;
-    height: 100vh;
+    height: 100%;
 /*    width: 100vw;*/
+overflow:hidden;
   }
 
   @keyframes gentlePopPositive {
@@ -193,8 +194,9 @@ html{
   text-decoration: none;
   background: linear-gradient(0deg, #fff, 55%, #d00);
   background-clip: text;
-  letter-spacing:.2vw;
+  letter-spacing:.3vw;
   font-size: clamp(2.3rem, 4.6vw, 4.6rem);
+
 }
 
 
@@ -264,8 +266,8 @@ html{
     }
 
   .grid-cell {
-    background-color: #f0f8ff;
-      background: rgba(255, 255, 255, 0.05);
+/*    background-color: #f0f8ff;*/
+/*      background: rgba(255, 255, 255, 0.05);*/
       display: flex;
       align-items: center;
       justify-content: center;
@@ -282,19 +284,7 @@ html{
 
     }
 
-    .grid-cell::before{
-    content: ' ';
-    position: absolute;
-    top: 20px;
-    right: 0;
-    border-bottom: 20px solid rgba(255, 255, 255, 0.15);
-    border-left: 20px solid #090a0b;
-    width: 0;
-    box-shadow: -2px 2px 3px rgba(0, 0, 0, .2);
-    transform-origin: top right;
-    transform: rotate(90deg);
-    border-radius: 0 0 5px 0;
-    }
+ 
 
    .grid-cell a.emojiLink {
       text-decoration: none;
@@ -302,9 +292,16 @@ html{
       pointer-events: auto;
       transition: transform .8s cubic-bezier(0.175, 0.885, 0.320, 1.275);
       z-index: 1;
-      font-size:5vw;
+      font-size: 4rem;
       text-decoration: none !important;
     }
+
+@media only screen and (max-width: 767px) and (orientation: portrait), 
+  only screen and (max-width: 767px) and (orientation: landscape) {
+    .grid-cell a.emojiLink { 
+      font-size: 2rem;
+  }    
+}
 
     .grid-cell a.textLink{
       
@@ -328,7 +325,7 @@ html{
       transform: scale(1);
     }
     .grid-cell:hover a.emojiLink{
-      transform:scale(2);
+/*      transform:scale(.7);*/
 
     }
 
@@ -389,7 +386,7 @@ nav a.active, nav a:hover{
   color:#fff;
   box-shadow:0 0 20px rgba(9,12,17,.5);
   max-width:440px;
-  max-height:50%;
+/*  height:500px;*/
   display:flex;
   flex-direction: column; 
   border-radius:32px;
@@ -398,7 +395,8 @@ nav a.active, nav a:hover{
   left: 50%;
   transform: translate(-50%, -50%);
   z-index: 1000;
-  display:none;
+  pointer-events: none;
+  opacity:0;
   overflow-y: scroll;
   overflow-x: hidden;
 }
@@ -420,20 +418,33 @@ nav a.active, nav a:hover{
        only screen and (max-width: 767px) and (orientation: landscape) {
   .modal { 
 
-    left:0;
-    right:0;
-    bottom:0;
-    transform:none;
-    border-radius:16px 16px 0 0;
+    left:20px;
+    right:20px;
+/*    bottom:0;*/
+    transform:translate(0px, -50%);
+/*    borde r-radius:16px 16px 0 0;*/
+    max-width:767px;
   }
   nav{
   
     padding:0;
   
   }
+  .section {
+    margin: 0 0 2vw;
+  }
+  .link a{
+    color:#fff;
+    text-decoration: none;
+    background: linear-gradient(0deg, #fff, 55%, #d00);
+    background-clip: text;
+    letter-spacing:.6vw;
+    font-size: clamp(2.3rem, 4.6vw, 4.6rem);
+}
   /*.modal-visible .sections{
-    display:none;
+    opacoity:none;
   }*/
+
   .grid-cell a.textLink{
     display:none;
   }
@@ -441,7 +452,8 @@ nav a.active, nav a:hover{
 
 
 .modal h4{
-  font-size:36px;
+/*  font-size: 36px;*/
+  font-size:clamp(1.5rem, 3.2rem, 3.2rem);
   margin: 0 0 4px;
   padding:0;
   font-family: "Dynapuff", sans-serif;
@@ -459,7 +471,8 @@ nav a.active, nav a:hover{
 }
 
 .modal.is-visible{
-  display:block;
+  opacity:1;
+  pointer-events: auto;
 }
 
 .modal a{
@@ -482,7 +495,7 @@ nav a.active, nav a:hover{
   top:12px;
 /*  vertical-align: center;*/
   text-align: center;
-  display: flex;
+  display: none;
   cursor:pointer;
   align-items: center;
   justify-content: center;
@@ -491,6 +504,10 @@ nav a.active, nav a:hover{
 
 .close img{
   opacity:.5;
+}
+
+.close:hover img{
+  opacity:.8;
 }
 
 .scrim{
@@ -553,6 +570,7 @@ nav a.active, nav a:hover{
   display: inline-block;
 /*  animation: fadeLetterIn .7s forwards; /* Changed to animation */*/
   animation-delay: calc(var(--index) * 0.2s); /* Simplified delay */
+  background-blend-mode: invert;
 }
 
 .showLetter{
