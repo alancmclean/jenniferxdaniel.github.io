@@ -453,7 +453,7 @@ nav a.active, nav a:hover{
 
 .modal h4{
 /*  font-size: 36px;*/
-  font-size:clamp(1.5rem, 3.2rem, 3.2rem);
+  font-size:clamp(1.5rem, 3rem, 3rem);
   margin: 0 0 4px;
   padding:0;
   font-family: "Dynapuff", sans-serif;
@@ -487,15 +487,15 @@ nav a.active, nav a:hover{
 .close{
   width: 40px;
   height: 40px;
-  background:rgba(0,0,0,.05);
+/*  background:rgba(0,0,0,.05);*/
 /*  color:#000;*/
   border-radius:20px;
   position:absolute;
   right:12px;
-  top:12px;
+  top:20px;
 /*  vertical-align: center;*/
   text-align: center;
-  display: none;
+/*  display: none;*/
   cursor:pointer;
   align-items: center;
   justify-content: center;
@@ -560,9 +560,10 @@ nav a.active, nav a:hover{
 
 .letter {
   font-family: "Dynapuff", sans-serif;
-  font-size:12vw;
-  letter-spacing:.5vw;
-  padding:1vw;
+  font-size: 8.25rem;
+  letter-spacing:.5rem;
+  padding: 1rem 1rem;
+  line-height: 100%;
   color:#fff;
   opacity: 0;
   font-weight: bold;
@@ -570,7 +571,7 @@ nav a.active, nav a:hover{
   display: inline-block;
 /*  animation: fadeLetterIn .7s forwards; /* Changed to animation */*/
   animation-delay: calc(var(--index) * 0.2s); /* Simplified delay */
-  background-blend-mode: invert;
+/*  background-blend-mode: invert;*/
 }
 
 .showLetter{
