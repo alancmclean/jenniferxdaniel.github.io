@@ -571,7 +571,7 @@ nav a.active, nav a:hover{
   letter-spacing:.5rem;
   padding: 1rem 1rem;
   line-height: 100%;
-  color:#fff;
+  color:#d73a92;
   opacity: 0;
   font-weight: bold;
   transition: opacity 1s ease-in-out;
