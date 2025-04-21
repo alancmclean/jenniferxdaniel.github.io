@@ -365,6 +365,10 @@ nav li:first-child{
   width: 100%;
 }
 
+nav li.about{
+  padding-right: 4px;
+}
+
 nav a{
   font-family: "Lato", serif;
   text-transform: uppercase;
